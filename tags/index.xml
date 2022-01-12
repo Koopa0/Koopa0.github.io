@@ -8,33 +8,6 @@
     <language>zh-tw</language>
     <lastBuildDate>Wed, 12 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://koopa0.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>.vimrc</title>
-      <link>https://koopa0.github.io/tags/.vimrc/</link>
-      <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://koopa0.github.io/tags/.vimrc/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>plugins</title>
-      <link>https://koopa0.github.io/tags/plugins/</link>
-      <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://koopa0.github.io/tags/plugins/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>spf13-vim</title>
-      <link>https://koopa0.github.io/tags/spf13-vim/</link>
-      <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://koopa0.github.io/tags/spf13-vim/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>tag_a</title>
       <link>https://koopa0.github.io/tags/tag_a/</link>
       <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
@@ -49,15 +22,6 @@
       <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://koopa0.github.io/tags/tag_c/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>vim</title>
-      <link>https://koopa0.github.io/tags/vim/</link>
-      <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://koopa0.github.io/tags/vim/</guid>
       <description></description>
     </item>
     
