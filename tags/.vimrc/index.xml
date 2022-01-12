@@ -9,10 +9,10 @@
     <lastBuildDate>Wed, 12 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://koopa0.github.io/tags/.vimrc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go-LeetCode</title>
-      <link>https://koopa0.github.io/posts/go-leetcode/romantointeger/</link>
+      <link>https://koopa0.github.io/posts/go-leetcode/</link>
       <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://koopa0.github.io/posts/go-leetcode/romantointeger/</guid>
+      <guid>https://koopa0.github.io/posts/go-leetcode/</guid>
       <description>Roman To Integer 
 Roman numerals are represented by seven different symbols: I , V , X , L , C , D and M .
    Symbol Value     I 1   V 5   X 10   L 50   C 100   D 500   M 1000    For example, two is written as  II in Roman numeral, just two one&amp;rsquo;s added together.</description>
