@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Golang on Koopa Cards</title>
-    <link>http://example.org/categories/golang/</link>
+    <link>https://koopa0.github.io/categories/golang/</link>
     <description>Recent content in Golang on Koopa Cards</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Wed, 12 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/categories/golang/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://koopa0.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go-LeetCode</title>
-      <link>http://example.org/posts/go-leetcode/romantointeger/</link>
+      <link>https://koopa0.github.io/posts/go-leetcode/romantointeger/</link>
       <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/posts/go-leetcode/romantointeger/</guid>
+      <guid>https://koopa0.github.io/posts/go-leetcode/romantointeger/</guid>
       <description>Roman To Integer 
 Roman numerals are represented by seven different symbols: I , V , X , L , C , D and M .
    Symbol Value     I 1   V 5   X 10   L 50   C 100   D 500   M 1000    For example, two is written as  II in Roman numeral, just two one&amp;rsquo;s added together.</description>

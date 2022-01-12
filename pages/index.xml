@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on Koopa Cards</title>
-    <link>http://example.org/pages/</link>
+    <link>https://koopa0.github.io/pages/</link>
     <description>Recent content in Pages on Koopa Cards</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-tw</language><atom:link href="http://example.org/pages/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-tw</language><atom:link href="https://koopa0.github.io/pages/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About</title>
-      <link>http://example.org/pages/about/</link>
+      <link>https://koopa0.github.io/pages/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/pages/about/</guid>
+      <guid>https://koopa0.github.io/pages/about/</guid>
       <description>Hugo cards is a Bootstrap based theme ported from the Jekyll theme Webjeda-cards. Any Bootstrap element can be used in the theme.
 For more themes, visit Hugo Themes
 Does the theme deserve a star?</description>
@@ -19,10 +19,10 @@ Does the theme deserve a star?</description>
     
     <item>
       <title>Contact</title>
-      <link>http://example.org/pages/contact/</link>
+      <link>https://koopa0.github.io/pages/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/pages/contact/</guid>
+      <guid>https://koopa0.github.io/pages/contact/</guid>
       <description>Visit my site
 Insert your contact details or a contact form here.</description>
     </item>

@@ -2,71 +2,71 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Koopa Cards</title>
-    <link>http://example.org/tags/</link>
+    <link>https://koopa0.github.io/tags/</link>
     <description>Recent content in Tags on Koopa Cards</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Wed, 12 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://koopa0.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>.vimrc</title>
-      <link>http://example.org/tags/.vimrc/</link>
+      <link>https://koopa0.github.io/tags/.vimrc/</link>
       <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/.vimrc/</guid>
+      <guid>https://koopa0.github.io/tags/.vimrc/</guid>
       <description></description>
     </item>
     
     <item>
       <title>plugins</title>
-      <link>http://example.org/tags/plugins/</link>
+      <link>https://koopa0.github.io/tags/plugins/</link>
       <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/plugins/</guid>
+      <guid>https://koopa0.github.io/tags/plugins/</guid>
       <description></description>
     </item>
     
     <item>
       <title>spf13-vim</title>
-      <link>http://example.org/tags/spf13-vim/</link>
+      <link>https://koopa0.github.io/tags/spf13-vim/</link>
       <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/spf13-vim/</guid>
+      <guid>https://koopa0.github.io/tags/spf13-vim/</guid>
       <description></description>
     </item>
     
     <item>
       <title>vim</title>
-      <link>http://example.org/tags/vim/</link>
+      <link>https://koopa0.github.io/tags/vim/</link>
       <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/vim/</guid>
+      <guid>https://koopa0.github.io/tags/vim/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tag_c</title>
-      <link>http://example.org/tags/tag_c/</link>
+      <link>https://koopa0.github.io/tags/tag_c/</link>
       <pubDate>Mon, 09 May 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/tag_c/</guid>
+      <guid>https://koopa0.github.io/tags/tag_c/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tag_a</title>
-      <link>http://example.org/tags/tag_a/</link>
+      <link>https://koopa0.github.io/tags/tag_a/</link>
       <pubDate>Sun, 10 Apr 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/tag_a/</guid>
+      <guid>https://koopa0.github.io/tags/tag_a/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tag_b</title>
-      <link>http://example.org/tags/tag_b/</link>
+      <link>https://koopa0.github.io/tags/tag_b/</link>
       <pubDate>Wed, 09 Mar 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/tag_b/</guid>
+      <guid>https://koopa0.github.io/tags/tag_b/</guid>
       <description></description>
     </item>
     

@@ -2,76 +2,76 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://example.org/tags/.vimrc/</loc>
+    <loc>https://koopa0.github.io/tags/.vimrc/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/categories/</loc>
+    <loc>https://koopa0.github.io/categories/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/posts/go-leetcode/romantointeger/</loc>
+    <loc>https://koopa0.github.io/posts/go-leetcode/romantointeger/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/categories/golang/</loc>
+    <loc>https://koopa0.github.io/categories/golang/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/</loc>
+    <loc>https://koopa0.github.io/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/categories/leetcode/</loc>
+    <loc>https://koopa0.github.io/categories/leetcode/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/plugins/</loc>
+    <loc>https://koopa0.github.io/tags/plugins/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/posts/</loc>
+    <loc>https://koopa0.github.io/posts/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/spf13-vim/</loc>
+    <loc>https://koopa0.github.io/tags/spf13-vim/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/</loc>
+    <loc>https://koopa0.github.io/tags/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/vim/</loc>
+    <loc>https://koopa0.github.io/tags/vim/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/categories/one/</loc>
+    <loc>https://koopa0.github.io/categories/one/</loc>
     <lastmod>2016-06-13T10:51:47+05:30</lastmod>
   </url><url>
-    <loc>http://example.org/categories/two/</loc>
+    <loc>https://koopa0.github.io/categories/two/</loc>
     <lastmod>2016-06-13T10:51:47+05:30</lastmod>
   </url><url>
-    <loc>http://example.org/posts/welcome-to-hugo/</loc>
+    <loc>https://koopa0.github.io/posts/welcome-to-hugo/</loc>
     <lastmod>2016-06-13T10:51:47+05:30</lastmod>
   </url><url>
-    <loc>http://example.org/posts/usage/</loc>
+    <loc>https://koopa0.github.io/posts/usage/</loc>
     <lastmod>2016-06-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/posts/no-image/</loc>
+    <loc>https://koopa0.github.io/posts/no-image/</loc>
     <lastmod>2016-06-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/posts/installation/</loc>
+    <loc>https://koopa0.github.io/posts/installation/</loc>
     <lastmod>2016-05-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/tag_c/</loc>
+    <loc>https://koopa0.github.io/tags/tag_c/</loc>
     <lastmod>2016-05-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/posts/elements/</loc>
+    <loc>https://koopa0.github.io/posts/elements/</loc>
     <lastmod>2016-04-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/tag_a/</loc>
+    <loc>https://koopa0.github.io/tags/tag_a/</loc>
     <lastmod>2016-04-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/posts/documentation/</loc>
+    <loc>https://koopa0.github.io/posts/documentation/</loc>
     <lastmod>2016-03-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/tag_b/</loc>
+    <loc>https://koopa0.github.io/tags/tag_b/</loc>
     <lastmod>2016-03-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/pages/about/</loc>
+    <loc>https://koopa0.github.io/pages/about/</loc>
   </url><url>
-    <loc>http://example.org/pages/contact/</loc>
+    <loc>https://koopa0.github.io/pages/contact/</loc>
   </url><url>
-    <loc>http://example.org/pages/</loc>
+    <loc>https://koopa0.github.io/pages/</loc>
   </url>
 </urlset>
