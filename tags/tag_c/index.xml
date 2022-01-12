@@ -6,22 +6,24 @@
     <description>Recent content in tag_c on Koopa Cards</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Mon, 09 May 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://koopa0.github.io/tags/tag_c/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://koopa0.github.io/tags/tag_c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go-LeetCode</title>
+      <link>https://koopa0.github.io/posts/elements/</link>
+      <pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://koopa0.github.io/posts/elements/</guid>
+      <description>Roman To Integer 
+Roman numerals are represented by seven different symbols: I , V , X , L , C , D and M .
+   Symbol Value     I 1   V 5   X 10   L 50   C 100   D 500   M 1000    For example, two is written as  II in Roman numeral, just two one&amp;rsquo;s added together.</description>
+    </item>
+    
     <item>
       <title>Installation</title>
       <link>https://koopa0.github.io/posts/installation/</link>
       <pubDate>Mon, 09 May 2016 00:00:00 +0000</pubDate>
       
       <guid>https://koopa0.github.io/posts/installation/</guid>
-      <description>Nulla vel ante sit amet leo imperdiet porta. Mauris pellentesque finibus ligula non dignissim. Sed sed vehicula velit. Ut eleifend velit maximus massa lobortis mattis. In dui quam, rutrum eu purus et, mattis consequat ex. Vivamus risus mauris, ultricies vel dolor eget, aliquet tristique est. Suspendisse odio urna, vehicula vel diam at, pulvinar porttitor metus. Sed ac ipsum et magna aliquam mattis in eleifend mi. Pellentesque porttitor diam nec hendrerit efficitur.</description>
-    </item>
-    
-    <item>
-      <title>Elements</title>
-      <link>https://koopa0.github.io/posts/elements/</link>
-      <pubDate>Sun, 10 Apr 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://koopa0.github.io/posts/elements/</guid>
       <description>Nulla vel ante sit amet leo imperdiet porta. Mauris pellentesque finibus ligula non dignissim. Sed sed vehicula velit. Ut eleifend velit maximus massa lobortis mattis. In dui quam, rutrum eu purus et, mattis consequat ex. Vivamus risus mauris, ultricies vel dolor eget, aliquet tristique est. Suspendisse odio urna, vehicula vel diam at, pulvinar porttitor metus. Sed ac ipsum et magna aliquam mattis in eleifend mi. Pellentesque porttitor diam nec hendrerit efficitur.</description>
     </item>
     
