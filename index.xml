@@ -65,17 +65,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non iaculis risus. P
     </item>
     
     <item>
-      <title>About</title>
-      <link>https://koopa0.github.io/pages/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://koopa0.github.io/pages/about/</guid>
-      <description>Hugo cards is a Bootstrap based theme ported from the Jekyll theme Webjeda-cards. Any Bootstrap element can be used in the theme.
-For more themes, visit Hugo Themes
-Does the theme deserve a star?</description>
-    </item>
-    
-    <item>
       <title>Contact</title>
       <link>https://koopa0.github.io/pages/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -83,6 +72,22 @@ Does the theme deserve a star?</description>
       <guid>https://koopa0.github.io/pages/contact/</guid>
       <description>Visit my site
 Insert your contact details or a contact form here.</description>
+    </item>
+    
+    <item>
+      <title>Koopa Blog</title>
+      <link>https://koopa0.github.io/pages/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://koopa0.github.io/pages/about/</guid>
+      <description>koopapapa@gmail.com2年JAVA後端開發經驗
+1年Golang後端開發
+此Blog紀錄和分享我的學習心得
+Skills  Programming Golang / Java / JavaScript
+ Database MySQL / MongoDB / PostgreSQL
+H2 / CouchDB /
+ Cloud service / System Docker / Linux / Mac OS / Windows
+ Others Git / Prometheus / Telegraf</description>
     </item>
     
   </channel>
