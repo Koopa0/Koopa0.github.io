@@ -65,17 +65,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non iaculis risus. P
     </item>
     
     <item>
-      <title>Contact</title>
-      <link>https://koopa0.github.io/pages/contact/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://koopa0.github.io/pages/contact/</guid>
-      <description>Visit my site
-Insert your contact details or a contact form here.</description>
-    </item>
-    
-    <item>
-      <title>Koopa Blog</title>
+      <title>About</title>
       <link>https://koopa0.github.io/pages/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -88,6 +78,16 @@ Skills  Programming Golang / Java / JavaScript
 H2 / CouchDB / Redis
  Cloud service / System Docker / Linux / Mac OS / Windows
  Others Git / Prometheus / Telegraf / Nacos</description>
+    </item>
+    
+    <item>
+      <title>Contact</title>
+      <link>https://koopa0.github.io/pages/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://koopa0.github.io/pages/contact/</guid>
+      <description>Visit my site
+Insert your contact details or a contact form here.</description>
     </item>
     
   </channel>
