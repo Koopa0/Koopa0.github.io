@@ -85,9 +85,9 @@ Insert your contact details or a contact form here.</description>
 此Blog紀錄和分享我的學習心得
 Skills  Programming Golang / Java / JavaScript
  Database MySQL / MongoDB / PostgreSQL
-H2 / CouchDB /
+H2 / CouchDB / Redis
  Cloud service / System Docker / Linux / Mac OS / Windows
- Others Git / Prometheus / Telegraf</description>
+ Others Git / Prometheus / Telegraf / Nacos</description>
     </item>
     
   </channel>
