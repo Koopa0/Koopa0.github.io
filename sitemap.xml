@@ -11,10 +11,10 @@
     <loc>https://koopa0.github.io/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://koopa0.github.io/posts/</loc>
+    <loc>https://koopa0.github.io/tags/leetcode/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://koopa0.github.io/tags/tag_c/</loc>
+    <loc>https://koopa0.github.io/posts/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://koopa0.github.io/tags/</loc>
@@ -39,6 +39,9 @@
     <lastmod>2016-06-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://koopa0.github.io/posts/installation/</loc>
+    <lastmod>2016-05-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://koopa0.github.io/tags/tag_c/</loc>
     <lastmod>2016-05-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://koopa0.github.io/posts/documentation/</loc>
