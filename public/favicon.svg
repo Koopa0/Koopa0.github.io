@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Dark background -->
+  <rect width="100" height="100" fill="#0d0d0d"/>
+
+  <!-- Letter K in blue -->
+  <g fill="#3b82f6">
+    <!-- Vertical bar of K -->
+    <rect x="25" y="20" width="10" height="60"/>
+
+    <!-- Upper diagonal of K -->
+    <polygon points="35,35 65,20 70,25 40,40"/>
+
+    <!-- Lower diagonal of K -->
+    <polygon points="40,60 70,75 65,80 35,65"/>
+  </g>
+</svg>

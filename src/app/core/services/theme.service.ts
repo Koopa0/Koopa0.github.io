@@ -135,15 +135,22 @@ export class ThemeService {
   private loadTheme(): void {
     if (!this.isBrowser) return;
 
-    // 1. 檢查 localStorage
-    const savedTheme = localStorage.getItem('theme') as Theme;
+    try {
+      // 1. 檢查 localStorage
+      const savedTheme = localStorage.getItem('theme');
 
-    if (savedTheme) {
-      this.theme.set(savedTheme);
-    } else {
-      // 2. 檢查系統偏好
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      this.theme.set(prefersDark ? 'dark' : 'light');
+      // Validate saved theme is a valid Theme value
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        this.theme.set(savedTheme);
+      } else {
+        // 2. 檢查系統偏好
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        this.theme.set(prefersDark ? 'dark' : 'light');
+      }
+    } catch (error) {
+      console.error('Failed to load theme:', error);
+      // Fallback to default dark theme
+      this.theme.set('dark');
     }
   }
 
@@ -159,17 +166,21 @@ export class ThemeService {
   private applyTheme(theme: Theme): void {
     if (!this.isBrowser) return;
 
-    const body = document.body;
+    try {
+      const body = document.body;
 
-    // 移除所有主題 class，避免衝突
-    body.classList.remove('dark', 'light');
+      // 移除所有主題 class，避免衝突
+      body.classList.remove('dark', 'light');
 
-    // 添加當前主題 class
-    // Tailwind CSS 會根據這個 class 應用對應的樣式
-    body.classList.add(theme);
+      // 添加當前主題 class
+      // Tailwind CSS 會根據這個 class 應用對應的樣式
+      body.classList.add(theme);
 
-    // 持久化到 localStorage，下次訪問時記住使用者偏好
-    localStorage.setItem('theme', theme);
+      // 持久化到 localStorage，下次訪問時記住使用者偏好
+      localStorage.setItem('theme', theme);
+    } catch (error) {
+      console.error('Failed to apply theme:', error);
+    }
   }
 }
 
