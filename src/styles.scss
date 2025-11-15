@@ -266,3 +266,11 @@ body.light::-webkit-scrollbar-thumb:hover {
 *:focus-visible {
   @apply outline-2 outline-offset-2 outline-accent-blue;
 }
+
+/* Grid pattern background */
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
