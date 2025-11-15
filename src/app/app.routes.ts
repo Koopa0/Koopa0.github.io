@@ -10,7 +10,15 @@ export const routes: Routes = [
     loadComponent: () => import('./features/blog/blog-list.component').then(m => m.BlogListComponent)
   },
   {
+    path: 'blog/:slug',
+    loadComponent: () => import('./features/blog/blog-detail.component').then(m => m.BlogDetailComponent)
+  },
+  {
     path: 'tags',
+    loadComponent: () => import('./features/tags/tags.component').then(m => m.TagsComponent)
+  },
+  {
+    path: 'tags/:tag',
     loadComponent: () => import('./features/tags/tags.component').then(m => m.TagsComponent)
   },
   {
@@ -19,6 +27,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: ''
+    loadComponent: () => import('./features/not-found/not-found.component').then(m => m.NotFoundComponent)
   }
 ];

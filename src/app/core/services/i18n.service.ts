@@ -1,7 +1,7 @@
 import { Injectable, signal, effect, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, catchError, of } from 'rxjs';
 
 export type Language = 'zh-TW' | 'en';
 
@@ -79,7 +79,8 @@ export class I18nService {
     let translation = this.translate(key);
 
     Object.keys(params).forEach(param => {
-      translation = translation.replace(`{{${param}}}`, params[param]);
+      // Use global regex to replace all occurrences
+      translation = translation.replace(new RegExp(`{{${param}}}`, 'g'), params[param] ?? '');
     });
 
     return translation;
@@ -116,6 +117,11 @@ export class I18nService {
     return this.http.get<Translations>(`/assets/i18n/${lang}.json`).pipe(
       tap(translations => {
         this.translations[lang] = translations;
+      }),
+      catchError(error => {
+        console.error(`Failed to load translations for ${lang}:`, error);
+        // Return empty translations as fallback
+        return of({} as Translations);
       })
     );
   }
