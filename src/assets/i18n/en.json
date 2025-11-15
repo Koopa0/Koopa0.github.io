@@ -15,6 +15,11 @@
     "en": "English",
     "toggle": "Toggle Language"
   },
+  "home": {
+    "techTopics": "Tech Topics",
+    "aboutMe": "About Me",
+    "aboutDescription": "I am a passionate developer focused on system architecture, algorithm optimization, and modern programming. Here I share my learning notes and practical experience."
+  },
   "blog": {
     "title": "Koopa's Tech Blog",
     "subtitle": "Sharing notes on programming, algorithms, and system architecture",
@@ -36,6 +41,8 @@
     "sql": "SQL",
     "ai": "Artificial Intelligence",
     "google": "Google",
+    "angular": "Angular",
+    "flutter": "Flutter",
     "allTags": "All Tags",
     "postsTagged": "Posts tagged with {{tag}}"
   },

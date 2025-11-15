@@ -35,7 +35,7 @@ import { I18nService } from '../../core/services/i18n.service';
 
       <!-- Tech Tags Section -->
       <section class="py-12">
-        <h2 class="text-3xl font-bold mb-8 text-center">技術主題 / Tech Topics</h2>
+        <h2 class="text-3xl font-bold mb-8 text-center">{{ t('home.techTopics') }}</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
           @for (tag of techTags; track tag.name) {
             <a
@@ -56,12 +56,9 @@ import { I18nService } from '../../core/services/i18n.service';
       <!-- About Section -->
       <section class="py-12 text-center">
         <div class="max-w-2xl mx-auto">
-          <h2 class="text-3xl font-bold mb-4">關於我 / About Me</h2>
+          <h2 class="text-3xl font-bold mb-4">{{ t('home.aboutMe') }}</h2>
           <p class="text-lg text-gray-600 dark:text-gray-400 mb-6">
-            {{ currentLang() === 'zh-TW'
-              ? '我是一個熱愛技術的開發者，專注於系統架構、演算法優化與現代化程式設計。在這裡分享我的學習心得與實戰經驗。'
-              : 'I am a passionate developer focused on system architecture, algorithm optimization, and modern programming. Here I share my learning notes and practical experience.'
-            }}
+            {{ t('home.aboutDescription') }}
           </p>
           <a
             routerLink="/about"
@@ -85,7 +82,9 @@ export class HomeComponent implements OnInit {
     { name: 'System', zhDesc: '系統架構設計', enDesc: 'System Design' },
     { name: 'SQL', zhDesc: '資料庫查詢', enDesc: 'Database Queries' },
     { name: 'AI', zhDesc: '人工智慧', enDesc: 'Artificial Intelligence' },
-    { name: 'Google', zhDesc: 'Google 技術', enDesc: 'Google Tech' }
+    { name: 'Google', zhDesc: 'Google 技術', enDesc: 'Google Tech' },
+    { name: 'Angular', zhDesc: 'Angular 框架', enDesc: 'Angular Framework' },
+    { name: 'Flutter', zhDesc: 'Flutter 開發', enDesc: 'Flutter Development' }
   ];
 
   ngOnInit() {

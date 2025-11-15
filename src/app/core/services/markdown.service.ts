@@ -28,9 +28,12 @@ export class MarkdownService {
    * Load all posts metadata (for listing)
    */
   getAllPosts(): Observable<PostMetadata[]> {
-    // In a real app, you'd have an index.json file listing all posts
-    // For now, we'll return an empty array
-    return of([]);
+    return this.http.get<PostMetadata[]>('/assets/posts/index.json').pipe(
+      catchError(error => {
+        console.error('Failed to load posts index:', error);
+        return of([]);
+      })
+    );
   }
 
   /**

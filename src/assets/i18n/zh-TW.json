@@ -15,6 +15,11 @@
     "en": "English",
     "toggle": "切換語言"
   },
+  "home": {
+    "techTopics": "技術主題",
+    "aboutMe": "關於我",
+    "aboutDescription": "我是一個熱愛技術的開發者，專注於系統架構、演算法優化與現代化程式設計。在這裡分享我的學習心得與實戰經驗。"
+  },
   "blog": {
     "title": "Koopa 的技術部落格",
     "subtitle": "分享程式設計、演算法與系統架構的學習筆記",
@@ -36,6 +41,8 @@
     "sql": "SQL",
     "ai": "人工智慧",
     "google": "Google",
+    "angular": "Angular",
+    "flutter": "Flutter",
     "allTags": "所有標籤",
     "postsTagged": "標籤為 {{tag}} 的文章"
   },
