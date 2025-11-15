@@ -17,18 +17,12 @@ import { I18nService } from '../../core/services/i18n.service';
         <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12">
           {{ t('blog.subtitle') }}
         </p>
-        <div class="flex justify-center gap-4">
+        <div class="flex justify-center">
           <a
             routerLink="/blog"
             class="px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
           >
             {{ t('blog.allPosts') }}
-          </a>
-          <a
-            routerLink="/tags"
-            class="px-8 py-3 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg font-medium transition-colors"
-          >
-            {{ t('tags.allTags') }}
           </a>
         </div>
       </section>

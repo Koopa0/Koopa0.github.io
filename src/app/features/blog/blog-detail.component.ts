@@ -27,31 +27,28 @@ import { I18nService } from '../../core/services/i18n.service';
     <div class="min-h-screen">
       @if (loading()) {
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <!-- Modern skeleton loader with shimmer effect -->
-          <div class="animate-pulse space-y-8">
+          <!-- Clean skeleton loader -->
+          <div class="space-y-8">
             <!-- Back button skeleton -->
-            <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-24 animate-shimmer bg-[length:200%_100%]"></div>
+            <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-24 animate-shimmer"></div>
 
             <!-- Title skeleton -->
             <div class="space-y-4">
-              <div class="h-12 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-3/4 animate-shimmer bg-[length:200%_100%]"></div>
+              <div class="h-12 bg-gray-200 dark:bg-gray-800 rounded w-3/4 animate-shimmer"></div>
               <div class="flex gap-4">
-                <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-32 animate-shimmer bg-[length:200%_100%]"></div>
-                <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-24 animate-shimmer bg-[length:200%_100%]"></div>
+                <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-32 animate-shimmer"></div>
+                <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-24 animate-shimmer"></div>
               </div>
               <div class="flex gap-2">
-                <div class="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded-full w-16 animate-shimmer bg-[length:200%_100%]"></div>
-                <div class="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded-full w-20 animate-shimmer bg-[length:200%_100%]"></div>
+                <div class="h-6 bg-gray-200 dark:bg-gray-800 rounded-full w-16 animate-shimmer"></div>
+                <div class="h-6 bg-gray-200 dark:bg-gray-800 rounded-full w-20 animate-shimmer"></div>
               </div>
             </div>
 
             <!-- Content skeleton -->
-            <div class="space-y-4 pt-8">
-              @for (i of [1,2,3,4,5,6,7,8]; track i) {
-                <div class="space-y-3">
-                  <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded animate-shimmer bg-[length:200%_100%]" [style.animation-delay]="i * 0.1 + 's'"></div>
-                  <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded animate-shimmer bg-[length:200%_100%]" [style.width]="90 - i * 2 + '%'" [style.animation-delay]="i * 0.1 + 's'"></div>
-                </div>
+            <div class="space-y-3 pt-8">
+              @for (i of [1,2,3,4,5,6]; track i) {
+                <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded animate-shimmer" [style.width]="(95 - i * 3) + '%'"></div>
               }
             </div>
           </div>
@@ -107,7 +104,7 @@ import { I18nService } from '../../core/services/i18n.service';
                       prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
                       prose-p:leading-relaxed prose-p:mb-4
                       prose-a:text-blue-500 prose-a:no-underline hover:prose-a:underline
-                      prose-code:text-blue-600 dark:prose-code:text-blue-400
+                      prose-code:text-gray-800 dark:prose-code:text-gray-100
                       prose-code:bg-gray-100 dark:prose-code:bg-gray-800
                       prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
                       prose-code:before:content-none prose-code:after:content-none

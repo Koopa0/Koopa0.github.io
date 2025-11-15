@@ -169,7 +169,7 @@ body.light::-webkit-scrollbar-thumb:hover {
   /* Inline code */
   code {
     @apply bg-gray-100 dark:bg-gray-800;
-    @apply text-blue-600 dark:text-blue-400;
+    @apply text-gray-800 dark:text-gray-100;
     @apply px-1.5 py-0.5 rounded;
     @apply text-sm font-mono;
     font-size: 0.875em;

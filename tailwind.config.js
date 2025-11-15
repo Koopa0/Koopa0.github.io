@@ -8,12 +8,18 @@ module.exports = {
     extend: {
       keyframes: {
         shimmer: {
-          '0%': { backgroundPosition: '-200% 0' },
-          '100%': { backgroundPosition: '200% 0' },
+          '0%': { opacity: '0.5' },
+          '50%': { opacity: '1' },
+          '100%': { opacity: '0.5' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       animation: {
-        shimmer: 'shimmer 2s ease-in-out infinite',
+        shimmer: 'shimmer 1.5s ease-in-out infinite',
+        fadeIn: 'fadeIn 0.3s ease-out',
       },
       colors: {
         // Zed-inspired dark theme colors
