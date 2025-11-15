@@ -1,132 +1,172 @@
-# Koopa 技術部落格
+# Koopa
 
-> 使用 Angular v20 和 Tailwind CSS 建立的現代化技術部落格
+個人技術部落格專案。
 
-## ✨ 特色功能
+## 功能特色
 
-- 🌓 **深色/淺色主題切換** - 預設深色主題，可一鍵切換
-- 🌍 **雙語支援** - 繁體中文與英文介面
-- 📱 **響應式設計** - 完美支援各種裝置
-- 🎨 **Zed 風格設計** - 參考 zed.dev 的極簡美學
-- ⚡ **快速載入** - Angular SSR 伺服器端渲染
-- 🔍 **全文搜尋** - 使用 Fuse.js 實現模糊搜尋
-- 📝 **Markdown 支援** - 完整的 Markdown 文章渲染
-- 🏷️ **標籤系統** - 7 大技術主題分類
-- 💻 **程式碼高亮** - Highlight.js 語法高亮
+- 深色與淺色主題支援，自動偵測系統偏好設定
+- 雙語介面（繁體中文 / 英文）
+- 伺服器端渲染（SSR）提升 SEO 與效能
+- 全文搜尋功能
+- 基於 Markdown 的內容管理，支援語法高亮
+- 響應式設計，最佳化所有裝置體驗
+- 主題式內容分類（Golang、Rust、Algorithm、System、SQL、AI、Google）
 
-## 🛠️ 技術堆疊
+## 技術堆疊
 
 ### 核心框架
-- **Angular v20** - 最新的 Standalone Components
-- **TypeScript 5.x** - 型別安全的開發體驗
-- **RxJS 7.x** - 反應式程式設計
+- Angular v20 獨立元件架構
+- TypeScript 5.x
+- RxJS 7.x 響應式程式設計
+- Angular SSR 伺服器端渲染
 
 ### 樣式系統
-- **Tailwind CSS v3** - 快速開發工具優先的 CSS 框架
-- **CSS Variables** - 動態主題系統
-- **Google Fonts** - Inter、Noto Sans TC、JetBrains Mono
+- Tailwind CSS v3
+- CSS Variables 主題系統
+- SCSS 進階樣式
 
-### 功能套件
-- **ngx-markdown** - Markdown 渲染
-- **gray-matter** - Front Matter 解析
-- **Highlight.js** - 程式碼語法高亮
-- **Fuse.js** - 客戶端全文搜尋
+### 內容管理
+- Markdown 與 Front Matter 支援
+- gray-matter 元資料解析
+- Highlight.js 程式碼語法高亮
+- ngx-markdown 渲染引擎
 
-### 部署
-- **Cloudflare Pages** - 全球 CDN 部署
-- **Angular SSR** - 伺服器端渲染優化 SEO
+### 搜尋功能
+- Fuse.js 客戶端模糊搜尋
 
-## 🏷️ 技術標籤
+## 環境需求
 
-- **Golang** 🐹 - Go 程式設計
-- **Rust** 🦀 - 系統程式語言
-- **Algorithm** 🧮 - 演算法與資料結構
-- **System** 🏗️ - 系統架構設計
-- **SQL** 💾 - 資料庫查詢
-- **AI** 🤖 - 人工智慧
-- **Google** 🔍 - Google 技術
+- Node.js 22.x 或更高版本
+- npm 10.x 或更高版本
 
-## 📦 安裝與開發
+## 安裝
 
-### 安裝依賴
+複製專案並安裝相依套件：
+
 ```bash
+git clone https://github.com/Koopa0/Koopa0.github.io.git
+cd Koopa0.github.io
 npm install
 ```
 
-### 開發伺服器
+## 開發
+
+啟動開發伺服器：
+
 ```bash
 npm start
-# 或
-ng serve
 ```
 
-開啟瀏覽器訪問 `http://localhost:4200`
+應用程式將在 `http://localhost:4200` 運行。開發伺服器支援熱模組替換，並會在原始檔案修改時自動重新載入。
 
-### 建置專案
+## 建置
+
+建置正式環境版本：
+
 ```bash
 npm run build
 ```
 
-建置檔案將輸出到 `dist/koopa/` 目錄
+建置產物將儲存在 `dist/koopa/` 目錄。正式環境建置包含：
+- Tree-shaking 優化的套件
+- 預先渲染的靜態路由
+- 壓縮的資源檔案
+- Source maps（可設定）
 
-### 預覽生產版本
-```bash
-npm run serve:ssr:koopa
-```
+## 部署
 
-## 📝 新增文章
+### Cloudflare Pages
 
-1. 在 `src/assets/posts/` 目錄下建立 `.md` 檔案
-2. 使用以下 Front Matter 格式：
+本專案已配置可部署至 Cloudflare Pages。
 
-```markdown
----
-title: "文章標題"
-date: 2024-01-01
-tags: ["golang", "algorithm"]
-description: "文章簡述"
----
+**建置設定：**
+- 建置指令：`npm run build`
+- 建置輸出目錄：`dist/koopa/browser`
+- Node 版本：22.x
 
-# 文章內容
+**手動部署：**
 
-這裡是 Markdown 內容...
-```
-
-3. 支援的標籤：`golang`, `rust`, `algorithm`, `system`, `sql`, `ai`, `google`
-
-## 🎨 設計理念
-
-本專案的設計靈感來自 [Zed.dev](https://zed.dev/docs/)，追求：
-- **極簡主義** - 專注於內容本身
-- **高對比度** - 提升可讀性
-- **流暢動畫** - 細膩的互動體驗
-- **清晰層級** - 明確的視覺層次
-
-## 🚀 部署到 Cloudflare Pages
-
-### 自動部署
-1. 推送程式碼到 GitHub
-2. 連接 Cloudflare Pages 專案
-3. 設定建置指令：`npm run build`
-4. 設定輸出目錄：`dist/koopa/browser`
-
-### 手動部署
 ```bash
 npm run build
 npx wrangler pages deploy dist/koopa/browser
 ```
 
-## 📄 授權
+## 專案結構
 
-MIT License - 自由使用與修改
+```
+src/
+├── app/
+│   ├── core/
+│   │   └── services/          # 核心服務（主題、多語系、Markdown、搜尋）
+│   ├── shared/
+│   │   └── components/        # 共用 UI 元件
+│   └── features/              # 功能模組（首頁、部落格、標籤、關於）
+├── assets/
+│   ├── posts/                 # Markdown 部落格文章
+│   └── i18n/                  # 國際化檔案
+└── styles.scss                # 全域樣式
+```
 
-## 🙋 關於作者
+## 內容管理
 
-**Koopa** - 熱愛技術的軟體工程師
+### 新增文章
 
-- 專注於系統架構、演算法優化與現代化程式設計
-- 分享學習心得與實戰經驗
+在 `src/assets/posts/` 目錄下建立新的 Markdown 檔案：
+
+```markdown
+---
+title: "文章標題"
+date: 2025-11-15
+tags: ["golang", "algorithm"]
+description: "文章簡短描述"
+---
+
+# 文章內容
+
+您的內容...
+```
+
+### 支援的標籤
+
+- `golang` - Go 程式設計
+- `rust` - Rust 程式設計
+- `algorithm` - 演算法與資料結構
+- `system` - 系統架構
+- `sql` - 資料庫與 SQL
+- `ai` - 人工智慧
+- `google` - Google 技術
+
+## 設定
+
+### 主題自訂
+
+主題系統使用定義於 `src/styles.scss` 的 CSS 變數。透過更新深色與淺色主題區段的數值來修改配色方案。
+
+### 語言檔案
+
+翻譯檔案位於 `src/assets/i18n/`：
+- `zh-TW.json` - 繁體中文
+- `en.json` - 英文
+
+## 瀏覽器支援
+
+- Chrome（最新版）
+- Firefox（最新版）
+- Safari（最新版）
+- Edge（最新版）
+
+## 授權
+
+本專案採用 MIT 授權條款。詳見 LICENSE 檔案。
+
+## 貢獻
+
+這是一個個人部落格專案。雖然不積極徵求貢獻，但歡迎透過 GitHub Issues 提出問題與建議。
+
+## 聯絡方式
+
+如有問題或意見回饋，請在 GitHub 上開啟 issue。
 
 ---
 
-**Built with ❤️ using Angular v20 & Tailwind CSS**
+使用 Angular v20 與 Tailwind CSS 建立
