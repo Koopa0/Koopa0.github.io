@@ -82,7 +82,9 @@ export class HomeComponent implements OnInit {
     { name: 'System', zhDesc: '系統架構設計', enDesc: 'System Design' },
     { name: 'SQL', zhDesc: '資料庫查詢', enDesc: 'Database Queries' },
     { name: 'AI', zhDesc: '人工智慧', enDesc: 'Artificial Intelligence' },
-    { name: 'Google', zhDesc: 'Google 技術', enDesc: 'Google Tech' }
+    { name: 'Google', zhDesc: 'Google 技術', enDesc: 'Google Tech' },
+    { name: 'Angular', zhDesc: 'Angular 框架', enDesc: 'Angular Framework' },
+    { name: 'Flutter', zhDesc: 'Flutter 開發', enDesc: 'Flutter Development' }
   ];
 
   ngOnInit() {

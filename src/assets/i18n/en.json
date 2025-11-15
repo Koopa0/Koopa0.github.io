@@ -41,6 +41,8 @@
     "sql": "SQL",
     "ai": "Artificial Intelligence",
     "google": "Google",
+    "angular": "Angular",
+    "flutter": "Flutter",
     "allTags": "All Tags",
     "postsTagged": "Posts tagged with {{tag}}"
   },

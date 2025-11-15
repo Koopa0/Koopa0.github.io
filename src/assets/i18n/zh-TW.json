@@ -41,6 +41,8 @@
     "sql": "SQL",
     "ai": "人工智慧",
     "google": "Google",
+    "angular": "Angular",
+    "flutter": "Flutter",
     "allTags": "所有標籤",
     "postsTagged": "標籤為 {{tag}} 的文章"
   },
