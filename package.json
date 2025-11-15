@@ -33,6 +33,7 @@
     "@angular/ssr": "^20.3.10",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
+    "buffer": "^6.0.3",
     "express": "^5.1.0",
     "fuse.js": "^7.1.0",
     "gray-matter": "^4.0.3",
