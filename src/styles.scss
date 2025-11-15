@@ -1,0 +1,156 @@
+/* Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Highlight.js theme for code syntax highlighting */
+@import 'highlight.js/styles/github-dark.css';
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark theme (default) */
+body.dark {
+  background-color: #0d0d0d;
+  color: #fafafa;
+}
+
+/* Light theme */
+body.light {
+  background-color: #ffffff;
+  color: #18181b;
+}
+
+/* Code blocks */
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+}
+
+/* Scrollbar styling for dark mode */
+body.dark::-webkit-scrollbar {
+  width: 10px;
+}
+
+body.dark::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+body.dark::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 5px;
+}
+
+body.dark::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}
+
+/* Scrollbar styling for light mode */
+body.light::-webkit-scrollbar {
+  width: 10px;
+}
+
+body.light::-webkit-scrollbar-track {
+  background: #f4f4f5;
+}
+
+body.light::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 5px;
+}
+
+body.light::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+}
+
+/* Markdown content styling */
+.markdown-content {
+  @apply leading-relaxed;
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold mb-4 mt-6;
+  }
+
+  h1 { @apply text-4xl; }
+  h2 { @apply text-3xl; }
+  h3 { @apply text-2xl; }
+  h4 { @apply text-xl; }
+
+  p {
+    @apply mb-4;
+  }
+
+  a {
+    @apply text-accent-blue hover:text-accent-blue-dark underline;
+  }
+
+  ul, ol {
+    @apply mb-4 ml-6;
+  }
+
+  li {
+    @apply mb-2;
+  }
+
+  blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic my-4;
+  }
+
+  pre {
+    @apply rounded-lg p-4 overflow-x-auto my-4;
+  }
+
+  code {
+    @apply text-sm;
+  }
+
+  table {
+    @apply w-full border-collapse my-4;
+  }
+
+  th, td {
+    @apply border border-gray-300 px-4 py-2;
+  }
+
+  th {
+    @apply bg-gray-100 font-semibold;
+  }
+
+  img {
+    @apply max-w-full h-auto rounded-lg my-4;
+  }
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Focus visible for accessibility */
+*:focus-visible {
+  @apply outline-2 outline-offset-2 outline-accent-blue;
+}
