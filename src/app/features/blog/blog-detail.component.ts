@@ -27,13 +27,32 @@ import { I18nService } from '../../core/services/i18n.service';
     <div class="min-h-screen">
       @if (loading()) {
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div class="animate-pulse">
-            <div class="h-8 bg-gray-200 dark:bg-gray-800 rounded w-3/4 mb-4"></div>
-            <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-1/2 mb-8"></div>
-            <div class="space-y-3">
-              <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded"></div>
-              <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded"></div>
-              <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-5/6"></div>
+          <!-- Modern skeleton loader with shimmer effect -->
+          <div class="animate-pulse space-y-8">
+            <!-- Back button skeleton -->
+            <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-24 animate-shimmer bg-[length:200%_100%]"></div>
+
+            <!-- Title skeleton -->
+            <div class="space-y-4">
+              <div class="h-12 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-3/4 animate-shimmer bg-[length:200%_100%]"></div>
+              <div class="flex gap-4">
+                <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-32 animate-shimmer bg-[length:200%_100%]"></div>
+                <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-24 animate-shimmer bg-[length:200%_100%]"></div>
+              </div>
+              <div class="flex gap-2">
+                <div class="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded-full w-16 animate-shimmer bg-[length:200%_100%]"></div>
+                <div class="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded-full w-20 animate-shimmer bg-[length:200%_100%]"></div>
+              </div>
+            </div>
+
+            <!-- Content skeleton -->
+            <div class="space-y-4 pt-8">
+              @for (i of [1,2,3,4,5,6,7,8]; track i) {
+                <div class="space-y-3">
+                  <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded animate-shimmer bg-[length:200%_100%]" [style.animation-delay]="i * 0.1 + 's'"></div>
+                  <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded animate-shimmer bg-[length:200%_100%]" [style.width]="90 - i * 2 + '%'" [style.animation-delay]="i * 0.1 + 's'"></div>
+                </div>
+              }
             </div>
           </div>
         </div>

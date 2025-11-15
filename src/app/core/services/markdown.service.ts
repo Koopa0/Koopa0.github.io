@@ -60,14 +60,17 @@ export class MarkdownService {
   private parseMarkdown(markdown: string, slug: string): Post {
     const { data, content } = matter(markdown);
 
+    // Remove the first H1 heading from content (since we display title in header)
+    const contentWithoutH1 = content.replace(/^#\s+.+$/m, '').trim();
+
     const post: Post = {
       title: data['title'] || 'Untitled',
       date: data['date'] || new Date().toISOString(),
       tags: data['tags'] || [],
       description: data['description'] || '',
       slug,
-      content,
-      readingTime: this.calculateReadingTime(content)
+      content: contentWithoutH1,
+      readingTime: this.calculateReadingTime(contentWithoutH1)
     };
 
     // Cache the post

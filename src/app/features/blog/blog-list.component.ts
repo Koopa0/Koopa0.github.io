@@ -13,12 +13,25 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
       <h1 class="text-4xl font-bold mb-12">{{ t('blog.allPosts') }}</h1>
 
       @if (loading()) {
+        <!-- Modern skeleton loader with shimmer effect -->
         <div class="space-y-6">
-          @for (i of [1, 2, 3]; track i) {
-            <div class="animate-pulse border border-gray-200 dark:border-gray-800 rounded-lg p-6">
-              <div class="h-6 bg-gray-200 dark:bg-gray-800 rounded w-3/4 mb-3"></div>
-              <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-full mb-2"></div>
-              <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-5/6"></div>
+          @for (i of [1, 2, 3, 4, 5]; track i) {
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg p-6 space-y-4">
+              <!-- Title skeleton -->
+              <div class="h-8 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-3/4 animate-shimmer bg-[length:200%_100%]" [style.animation-delay]="i * 0.05 + 's'"></div>
+
+              <!-- Description skeleton -->
+              <div class="space-y-2">
+                <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-full animate-shimmer bg-[length:200%_100%]" [style.animation-delay]="i * 0.05 + 's'"></div>
+                <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-5/6 animate-shimmer bg-[length:200%_100%]" [style.animation-delay]="i * 0.05 + 0.1 + 's'"></div>
+              </div>
+
+              <!-- Metadata skeleton -->
+              <div class="flex gap-4">
+                <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-32 animate-shimmer bg-[length:200%_100%]" [style.animation-delay]="i * 0.05 + 0.2 + 's'"></div>
+                <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-16 animate-shimmer bg-[length:200%_100%]" [style.animation-delay]="i * 0.05 + 0.2 + 's'"></div>
+                <div class="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded w-16 animate-shimmer bg-[length:200%_100%]" [style.animation-delay]="i * 0.05 + 0.2 + 's'"></div>
+              </div>
             </div>
           }
         </div>
