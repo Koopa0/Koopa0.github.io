@@ -61,7 +61,8 @@ export class MarkdownService {
     const { data, content } = matter(markdown);
 
     // Remove the first H1 heading from content (since we display title in header)
-    const contentWithoutH1 = content.replace(/^#\s+.+$/m, '').trim();
+    // This regex removes the first H1, including any leading whitespace/newlines
+    const contentWithoutH1 = content.replace(/^\s*#\s+.*?(\r?\n|$)/, '').trim();
 
     const post: Post = {
       title: data['title'] || 'Untitled',
