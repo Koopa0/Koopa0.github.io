@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "tags": "Tags",
+    "about": "About"
+  },
+  "theme": {
+    "dark": "Dark Mode",
+    "light": "Light Mode",
+    "toggle": "Toggle Theme"
+  },
+  "language": {
+    "zh-TW": "繁體中文",
+    "en": "English",
+    "toggle": "Toggle Language"
+  },
+  "blog": {
+    "title": "Koopa's Tech Blog",
+    "subtitle": "Sharing notes on programming, algorithms, and system architecture",
+    "readMore": "Read More",
+    "readTime": "{{minutes}} min read",
+    "publishedOn": "Published on",
+    "noPostsFound": "No posts found",
+    "searchPlaceholder": "Search posts...",
+    "allPosts": "All Posts",
+    "recentPosts": "Recent Posts",
+    "relatedPosts": "Related Posts",
+    "tableOfContents": "Table of Contents"
+  },
+  "tags": {
+    "golang": "Golang",
+    "rust": "Rust",
+    "algorithm": "Algorithm",
+    "system": "System Architecture",
+    "sql": "SQL",
+    "ai": "Artificial Intelligence",
+    "google": "Google",
+    "allTags": "All Tags",
+    "postsTagged": "Posts tagged with {{tag}}"
+  },
+  "footer": {
+    "copyright": "© {{year}} Koopa. All rights reserved.",
+    "builtWith": "Built with Angular {{version}}"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "notFound": "Page not found",
+    "backToHome": "Back to Home"
+  }
+}

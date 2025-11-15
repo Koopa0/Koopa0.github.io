@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "首頁",
+    "blog": "文章",
+    "tags": "標籤",
+    "about": "關於"
+  },
+  "theme": {
+    "dark": "深色模式",
+    "light": "淺色模式",
+    "toggle": "切換主題"
+  },
+  "language": {
+    "zh-TW": "繁體中文",
+    "en": "English",
+    "toggle": "切換語言"
+  },
+  "blog": {
+    "title": "Koopa 的技術部落格",
+    "subtitle": "分享程式設計、演算法與系統架構的學習筆記",
+    "readMore": "閱讀更多",
+    "readTime": "{{minutes}} 分鐘閱讀",
+    "publishedOn": "發布於",
+    "noPostsFound": "找不到文章",
+    "searchPlaceholder": "搜尋文章...",
+    "allPosts": "所有文章",
+    "recentPosts": "最新文章",
+    "relatedPosts": "相關文章",
+    "tableOfContents": "目錄"
+  },
+  "tags": {
+    "golang": "Golang",
+    "rust": "Rust",
+    "algorithm": "演算法",
+    "system": "系統架構",
+    "sql": "SQL",
+    "ai": "人工智慧",
+    "google": "Google",
+    "allTags": "所有標籤",
+    "postsTagged": "標籤為 {{tag}} 的文章"
+  },
+  "footer": {
+    "copyright": "© {{year}} Koopa. 保留所有權利。",
+    "builtWith": "使用 Angular {{version}} 建立"
+  },
+  "common": {
+    "loading": "載入中...",
+    "error": "發生錯誤",
+    "notFound": "找不到頁面",
+    "backToHome": "回到首頁"
+  }
+}
