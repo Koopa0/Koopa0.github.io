@@ -19,7 +19,7 @@ export const routes: Routes = [
   },
   {
     path: 'tags/:tag',
-    loadComponent: () => import('./features/tags/tags.component').then(m => m.TagsComponent)
+    loadComponent: () => import('./features/tags/tag-posts.component').then(m => m.TagPostsComponent)
   },
   {
     path: 'about',
