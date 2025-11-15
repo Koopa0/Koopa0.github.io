@@ -2,10 +2,11 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
-import { MarkdownService, Post } from '../../core/services/markdown.service';
+import { MarkdownService, Post, PostMetadata, SeriesInfo } from '../../core/services/markdown.service';
 import { I18nService } from '../../core/services/i18n.service';
 import { ReadingProgressComponent } from '../../shared/components/reading-progress.component';
 import { CodeBlockCopyButtonComponent } from '../../shared/components/code-block-copy-button.component';
+import { forkJoin } from 'rxjs';
 
 /**
  * Blog Detail Component
@@ -144,6 +145,89 @@ import { CodeBlockCopyButtonComponent } from '../../shared/components/code-block
               <markdown [data]="post()!.content"></markdown>
             </div>
           </div>
+
+          <!-- Series Navigation -->
+          @if (post()!.series && seriesInfo()) {
+            <div class="mt-16 border-t border-gray-200 dark:border-gray-800 pt-12">
+              <div class="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900/50 dark:to-gray-900/50 border border-blue-200 dark:border-gray-800 rounded-2xl p-8 backdrop-blur-sm">
+                <!-- Series Header -->
+                <div class="flex items-center gap-3 mb-6">
+                  <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                  <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ currentLang() === 'zh-TW' ? '本文是系列文章的一部分' : 'Part of a series' }}</p>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">{{ seriesInfo()!.title }}</h3>
+                  </div>
+                </div>
+
+                <p class="text-gray-700 dark:text-gray-300 mb-6">{{ seriesInfo()!.description }}</p>
+
+                <!-- Progress -->
+                <div class="mb-6">
+                  <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    <span>{{ currentLang() === 'zh-TW' ? '進度' : 'Progress' }}</span>
+                    <span>{{ post()!.seriesOrder }} / {{ seriesInfo()!.totalPosts }}</span>
+                  </div>
+                  <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div
+                      class="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-300"
+                      [style.width]="(post()!.seriesOrder! / seriesInfo()!.totalPosts * 100) + '%'"
+                    ></div>
+                  </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                  @if (seriesNav.previous) {
+                    <a
+                      [routerLink]="['/blog', seriesNav.previous.slug]"
+                      class="group flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                    >
+                      <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:-translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                      </svg>
+                      <div class="flex-1 text-left">
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ currentLang() === 'zh-TW' ? '上一篇' : 'Previous' }}</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-1">{{ seriesNav.previous.title }}</p>
+                      </div>
+                    </a>
+                  } @else {
+                    <div class="p-4 bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl opacity-50">
+                      <p class="text-xs text-gray-500 dark:text-gray-400">{{ currentLang() === 'zh-TW' ? '這是第一篇' : 'First article' }}</p>
+                    </div>
+                  }
+
+                  @if (seriesNav.next) {
+                    <a
+                      [routerLink]="['/blog', seriesNav.next.slug]"
+                      class="group flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                    >
+                      <div class="flex-1 text-right">
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ currentLang() === 'zh-TW' ? '下一篇' : 'Next' }}</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-1">{{ seriesNav.next.title }}</p>
+                      </div>
+                      <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </a>
+                  } @else {
+                    <div class="p-4 bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl opacity-50">
+                      <p class="text-xs text-gray-500 dark:text-gray-400 text-right">{{ currentLang() === 'zh-TW' ? '這是最後一篇' : 'Last article' }}</p>
+                    </div>
+                  }
+                </div>
+
+                <!-- View All Series Link -->
+                <a
+                  [routerLink]="['/series', post()!.series]"
+                  class="block text-center py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                >
+                  {{ currentLang() === 'zh-TW' ? '查看完整系列' : 'View full series' }} ({{ seriesInfo()!.totalPosts }} {{ currentLang() === 'zh-TW' ? '篇' : 'articles' }})
+                </a>
+              </div>
+            </div>
+          }
         </article>
       } @else {
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
@@ -168,6 +252,8 @@ export class BlogDetailComponent implements OnInit {
   currentLang = this.i18nService.currentLang;
   post = signal<Post | null>(null);
   loading = signal(true);
+  seriesInfo = signal<SeriesInfo | null>(null);
+  seriesNav: { previous: PostMetadata | null; next: PostMetadata | null } = { previous: null, next: null };
 
   ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug');
@@ -176,9 +262,21 @@ export class BlogDetailComponent implements OnInit {
       return;
     }
 
-    this.markdownService.getPost(slug).subscribe({
-      next: (post) => {
+    // Load post and all posts for series navigation
+    forkJoin({
+      post: this.markdownService.getPost(slug),
+      allPosts: this.markdownService.getAllPosts()
+    }).subscribe({
+      next: ({ post, allPosts }) => {
         this.post.set(post);
+
+        // If post is part of a series, load series info and navigation
+        if (post?.series) {
+          const series = this.markdownService.getSeriesById(allPosts, post.series);
+          this.seriesInfo.set(series);
+          this.seriesNav = this.markdownService.getSeriesNavigation(post, allPosts);
+        }
+
         this.loading.set(false);
       },
       error: () => {

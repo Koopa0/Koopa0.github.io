@@ -9,11 +9,25 @@ export interface PostMetadata {
   tags: string[];
   description?: string;
   slug: string;
+  // Phase 1-3: Content classification
+  category?: string;      // tutorial-series | tutorial | daily | note | project
+  series?: string;        // Series identifier (e.g., 'golang-advanced')
+  seriesOrder?: number;   // Order in series (1, 2, 3, ...)
 }
 
 export interface Post extends PostMetadata {
   content: string;
   readingTime: number; // in minutes
+}
+
+// Series information
+export interface SeriesInfo {
+  id: string;
+  title: string;
+  description: string;
+  posts: PostMetadata[];
+  totalPosts: number;
+  lastUpdated: string;
 }
 
 @Injectable({
@@ -71,7 +85,11 @@ export class MarkdownService {
       description: data['description'] || '',
       slug,
       content: contentWithoutH1,
-      readingTime: this.calculateReadingTime(contentWithoutH1)
+      readingTime: this.calculateReadingTime(contentWithoutH1),
+      // Phase 1-3: Parse classification fields
+      category: data['category'],
+      series: data['series'],
+      seriesOrder: data['seriesOrder']
     };
 
     // Cache the post
@@ -146,5 +164,109 @@ export class MarkdownService {
     }
 
     return toc;
+  }
+
+  /**
+   * Phase 2: Get all series
+   */
+  getAllSeries(posts: PostMetadata[]): SeriesInfo[] {
+    const seriesMap = new Map<string, PostMetadata[]>();
+
+    // Group posts by series
+    posts.forEach(post => {
+      if (post.series) {
+        if (!seriesMap.has(post.series)) {
+          seriesMap.set(post.series, []);
+        }
+        seriesMap.get(post.series)!.push(post);
+      }
+    });
+
+    // Convert to SeriesInfo array
+    return Array.from(seriesMap.entries()).map(([seriesId, seriesPosts]) => {
+      // Sort by seriesOrder
+      const sortedPosts = seriesPosts.sort((a, b) =>
+        (a.seriesOrder || 0) - (b.seriesOrder || 0)
+      );
+
+      // Find the latest update date
+      const latestDate = sortedPosts.reduce((latest, post) => {
+        return new Date(post.date) > new Date(latest) ? post.date : latest;
+      }, sortedPosts[0].date);
+
+      return {
+        id: seriesId,
+        title: this.getSeriesTitle(seriesId),
+        description: this.getSeriesDescription(seriesId),
+        posts: sortedPosts,
+        totalPosts: sortedPosts.length,
+        lastUpdated: latestDate
+      };
+    }).sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime());
+  }
+
+  /**
+   * Phase 2: Get series by ID
+   */
+  getSeriesById(posts: PostMetadata[], seriesId: string): SeriesInfo | null {
+    const allSeries = this.getAllSeries(posts);
+    return allSeries.find(s => s.id === seriesId) || null;
+  }
+
+  /**
+   * Phase 2: Get next/previous post in series
+   */
+  getSeriesNavigation(currentPost: Post, allPosts: PostMetadata[]): {
+    previous: PostMetadata | null;
+    next: PostMetadata | null;
+  } {
+    if (!currentPost.series) {
+      return { previous: null, next: null };
+    }
+
+    const series = this.getSeriesById(allPosts, currentPost.series);
+    if (!series) {
+      return { previous: null, next: null };
+    }
+
+    const currentIndex = series.posts.findIndex(p => p.slug === currentPost.slug);
+
+    return {
+      previous: currentIndex > 0 ? series.posts[currentIndex - 1] : null,
+      next: currentIndex < series.posts.length - 1 ? series.posts[currentIndex + 1] : null
+    };
+  }
+
+  /**
+   * Phase 3: Filter posts by category
+   */
+  getPostsByCategory(posts: PostMetadata[], category: string): PostMetadata[] {
+    return posts.filter(post => post.category === category);
+  }
+
+  /**
+   * Helper: Get series title from ID
+   */
+  private getSeriesTitle(seriesId: string): string {
+    const titles: Record<string, string> = {
+      'golang-advanced': 'Golang 進階系列',
+      'golang-concurrency': 'Golang 並發模式',
+      'algorithm-basics': '演算法基礎',
+      'data-structures': '資料結構深入解析'
+    };
+    return titles[seriesId] || seriesId;
+  }
+
+  /**
+   * Helper: Get series description from ID
+   */
+  private getSeriesDescription(seriesId: string): string {
+    const descriptions: Record<string, string> = {
+      'golang-advanced': '深入探討 Golang 的進階特性與最佳實踐',
+      'golang-concurrency': '從基礎到進階，完整掌握 Golang 並發編程',
+      'algorithm-basics': '演算法基礎概念與常見問題解析',
+      'data-structures': '常用資料結構的實現原理與應用場景'
+    };
+    return descriptions[seriesId] || '系列文章';
   }
 }
