@@ -344,51 +344,66 @@ export class BlogDetailComponent implements OnInit {
   relatedPosts = signal<PostMetadata[]>([]);
 
   ngOnInit() {
-    const slug = this.route.snapshot.paramMap.get('slug');
-    if (!slug) {
-      this.router.navigate(['/blog']);
-      return;
-    }
-
-    // Load post and all posts for series navigation and related posts
-    forkJoin({
-      post: this.markdownService.getPost(slug),
-      allPosts: this.markdownService.getAllPosts()
-    })
+    // 訂閱路由參數變化，解決 OnPush 模式下的導航問題
+    this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: ({ post, allPosts }) => {
-          this.post.set(post);
-
-          if (post) {
-            // 設置 SEO Meta Tags 和 Schema.org
-            this.seoService.setArticle(post);
-
-            // 設置麵包屑 Schema
-            this.seoService.setBreadcrumbSchema([
-              { name: '首頁', url: '/' },
-              { name: '部落格', url: '/blog' },
-              { name: post.title, url: `/blog/${post.slug}` }
-            ]);
-
-            // If post is part of a series, load series info and navigation
-            if (post.series) {
-              const series = this.markdownService.getSeriesById(allPosts, post.series);
-              this.seriesInfo.set(series);
-              this.seriesNav = this.markdownService.getSeriesNavigation(post, allPosts);
-            }
-
-            // Load related posts based on tags
-            const related = this.markdownService.getRelatedPosts(post, allPosts, 3);
-            this.relatedPosts.set(related);
-          }
-
-          this.loading.set(false);
-        },
-        error: () => {
-          this.loading.set(false);
+      .subscribe(params => {
+        const slug = params.get('slug');
+        if (!slug) {
           this.router.navigate(['/blog']);
+          return;
         }
+
+        // 重置狀態
+        this.loading.set(true);
+        this.post.set(null);
+        this.seriesInfo.set(null);
+        this.seriesNav = { previous: null, next: null };
+        this.relatedPosts.set([]);
+
+        // 滾動到頁面頂部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Load post and all posts for series navigation and related posts
+        forkJoin({
+          post: this.markdownService.getPost(slug),
+          allPosts: this.markdownService.getAllPosts()
+        })
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: ({ post, allPosts }) => {
+              this.post.set(post);
+
+              if (post) {
+                // 設置 SEO Meta Tags 和 Schema.org
+                this.seoService.setArticle(post);
+
+                // 設置麵包屑 Schema
+                this.seoService.setBreadcrumbSchema([
+                  { name: '首頁', url: '/' },
+                  { name: '部落格', url: '/blog' },
+                  { name: post.title, url: `/blog/${post.slug}` }
+                ]);
+
+                // If post is part of a series, load series info and navigation
+                if (post.series) {
+                  const series = this.markdownService.getSeriesById(allPosts, post.series);
+                  this.seriesInfo.set(series);
+                  this.seriesNav = this.markdownService.getSeriesNavigation(post, allPosts);
+                }
+
+                // Load related posts based on tags
+                const related = this.markdownService.getRelatedPosts(post, allPosts, 3);
+                this.relatedPosts.set(related);
+              }
+
+              this.loading.set(false);
+            },
+            error: () => {
+              this.loading.set(false);
+              this.router.navigate(['/blog']);
+            }
+          });
       });
   }
 

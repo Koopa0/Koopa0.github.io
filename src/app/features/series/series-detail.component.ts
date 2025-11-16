@@ -1,6 +1,7 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
 import { MarkdownService, SeriesInfo, PostMetadata } from '../../core/services/markdown.service';
 
@@ -8,6 +9,7 @@ import { MarkdownService, SeriesInfo, PostMetadata } from '../../core/services/m
   selector: 'app-series-detail',
   standalone: true,
   imports: [CommonModule, RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="relative">
       <!-- Gradient Background -->
@@ -206,29 +208,44 @@ export class SeriesDetailComponent implements OnInit {
   private markdownService = inject(MarkdownService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   currentLang = this.i18nService.currentLang;
   series = signal<SeriesInfo | null>(null);
   loading = signal(true);
 
   ngOnInit() {
-    const seriesId = this.route.snapshot.paramMap.get('id');
+    // 訂閱路由參數變化，解決 OnPush 模式下的導航問題
+    this.route.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(params => {
+        const seriesId = params.get('id');
 
-    if (!seriesId) {
-      this.router.navigate(['/series']);
-      return;
-    }
+        if (!seriesId) {
+          this.router.navigate(['/series']);
+          return;
+        }
 
-    this.markdownService.getAllPosts().subscribe({
-      next: (posts) => {
-        const foundSeries = this.markdownService.getSeriesById(posts, seriesId);
-        this.series.set(foundSeries);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.loading.set(false);
-      }
-    });
+        // 重置狀態
+        this.loading.set(true);
+        this.series.set(null);
+
+        // 滾動到頁面頂部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        this.markdownService.getAllPosts()
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: (posts) => {
+              const foundSeries = this.markdownService.getSeriesById(posts, seriesId);
+              this.series.set(foundSeries);
+              this.loading.set(false);
+            },
+            error: () => {
+              this.loading.set(false);
+            }
+          });
+      });
   }
 
   formatDate(date: string): string {
