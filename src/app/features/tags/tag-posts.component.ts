@@ -49,20 +49,22 @@ import { I18nService } from '../../core/services/i18n.service';
           </div>
         </div>
       } @else {
+        @let lang = currentLang();
+        @let postList = posts();
         <!-- Tag header -->
         <div class="mb-8">
           <h1 class="text-4xl font-bold mb-4 capitalize">
             {{ t('tags.' + tag()) }}
           </h1>
           <p class="text-gray-600 dark:text-gray-400">
-            {{ posts().length }} {{ currentLang() === 'zh-TW' ? '篇文章' : 'posts' }}
+            {{ postList.length }} {{ lang === 'zh-TW' ? '篇文章' : 'posts' }}
           </p>
         </div>
 
         <!-- Posts list -->
-        @if (posts().length > 0) {
+        @if (postList.length > 0) {
           <div class="space-y-6">
-            @for (post of posts(); track post.slug) {
+            @for (post of postList; track post.slug) {
               <article class="group border border-gray-200 dark:border-gray-800 rounded-lg p-6 hover:border-blue-500 dark:hover:border-blue-500 transition-all hover:shadow-lg">
                 <a [routerLink]="['/blog', post.slug]" class="block">
                   <h2 class="text-2xl font-bold mb-3 group-hover:text-blue-500 transition-colors">
@@ -102,7 +104,7 @@ import { I18nService } from '../../core/services/i18n.service';
         } @else {
           <div class="text-center py-16">
             <p class="text-gray-600 dark:text-gray-400 mb-4">
-              {{ currentLang() === 'zh-TW' ? '此標籤尚無文章' : 'No posts found for this tag' }}
+              {{ lang === 'zh-TW' ? '此標籤尚無文章' : 'No posts found for this tag' }}
             </p>
             <a
               routerLink="/blog"

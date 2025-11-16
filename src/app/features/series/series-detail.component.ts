@@ -30,7 +30,8 @@ import { MarkdownService, SeriesInfo } from '../../core/services/markdown.servic
               }
             </div>
           </div>
-        } @else if (series()) {
+        } @else if (series(); as s) {
+          @let lang = currentLang();
           <div class="animate-slideUp">
             <!-- Back button -->
             <div class="mb-8">
@@ -42,7 +43,7 @@ import { MarkdownService, SeriesInfo } from '../../core/services/markdown.servic
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
                 <span class="font-medium">
-                  {{ currentLang() === 'zh-TW' ? '返回系列列表' : 'Back to Series' }}
+                  {{ lang === 'zh-TW' ? '返回系列列表' : 'Back to Series' }}
                 </span>
               </a>
             </div>
@@ -55,18 +56,18 @@ import { MarkdownService, SeriesInfo } from '../../core/services/markdown.servic
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
-                  {{ currentLang() === 'zh-TW' ? '系列教學' : 'Tutorial Series' }}
+                  {{ lang === 'zh-TW' ? '系列教學' : 'Tutorial Series' }}
                 </span>
               </div>
 
               <!-- Title -->
               <h1 class="text-4xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent">
-                {{ series()!.title }}
+                {{ s.title }}
               </h1>
 
               <!-- Description -->
               <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                {{ series()!.description }}
+                {{ s.description }}
               </p>
 
               <!-- Metadata -->
@@ -76,7 +77,7 @@ import { MarkdownService, SeriesInfo } from '../../core/services/markdown.servic
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   <span class="font-medium">
-                    {{ series()!.totalPosts }} {{ currentLang() === 'zh-TW' ? '篇文章' : 'articles' }}
+                    {{ s.totalPosts }} {{ lang === 'zh-TW' ? '篇文章' : 'articles' }}
                   </span>
                 </div>
 
@@ -87,7 +88,7 @@ import { MarkdownService, SeriesInfo } from '../../core/services/markdown.servic
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>
-                    {{ currentLang() === 'zh-TW' ? '更新於 ' : 'Updated ' }}{{ formatDate(series()!.lastUpdated) }}
+                    {{ lang === 'zh-TW' ? '更新於 ' : 'Updated ' }}{{ formatDate(s.lastUpdated) }}
                   </span>
                 </div>
               </div>
@@ -98,7 +99,7 @@ import { MarkdownService, SeriesInfo } from '../../core/services/markdown.servic
 
             <!-- Articles List -->
             <div class="space-y-4">
-              @for (post of series()!.posts; track post.slug) {
+              @for (post of s.posts; track post.slug) {
                 <article class="group">
                   <a
                     [routerLink]="['/blog', post.slug]"
@@ -158,19 +159,19 @@ import { MarkdownService, SeriesInfo } from '../../core/services/markdown.servic
             <!-- Start Learning CTA -->
             <div class="mt-12 p-8 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900/50 dark:to-gray-900/50 border-2 border-purple-200 dark:border-purple-900 rounded-2xl text-center">
               <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-gray-100">
-                {{ currentLang() === 'zh-TW' ? '準備好開始學習了嗎？' : 'Ready to start learning?' }}
+                {{ lang === 'zh-TW' ? '準備好開始學習了嗎？' : 'Ready to start learning?' }}
               </h3>
               <p class="text-gray-600 dark:text-gray-400 mb-6">
-                {{ currentLang() === 'zh-TW'
+                {{ lang === 'zh-TW'
                   ? '從第一篇文章開始，循序漸進掌握知識'
                   : 'Start from the first article and master the knowledge step by step'
                 }}
               </p>
               <a
-                [routerLink]="['/blog', series()!.posts[0].slug]"
+                [routerLink]="['/blog', s.posts[0].slug]"
                 class="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-xl hover:shadow-glow-md transition-all duration-300 hover:-translate-y-0.5"
               >
-                <span>{{ currentLang() === 'zh-TW' ? '開始學習' : 'Start Learning' }}</span>
+                <span>{{ lang === 'zh-TW' ? '開始學習' : 'Start Learning' }}</span>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
