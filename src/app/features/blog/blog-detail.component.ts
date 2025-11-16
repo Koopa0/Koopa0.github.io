@@ -1,10 +1,11 @@
-import { Component, inject, OnInit, signal, DestroyRef } from '@angular/core';
+import { Component, inject, OnInit, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MarkdownService, Post, PostMetadata, SeriesInfo } from '../../core/services/markdown.service';
 import { I18nService } from '../../core/services/i18n.service';
+import { SeoService } from '../../core/services/seo.service';
 import { ReadingProgressComponent } from '../../shared/components/reading-progress.component';
 import { CodeBlockCopyButtonComponent } from '../../shared/components/code-block-copy-button.component';
 import { TableOfContentsComponent } from '../../shared/components/table-of-contents.component';
@@ -23,11 +24,14 @@ import { forkJoin } from 'rxjs';
  * - 簡潔的排版
  * - 清晰的內容層級
  * - 適當的留白空間
+ *
+ * 性能優化：使用 OnPush Change Detection 配合 Signal
  */
 @Component({
   selector: 'app-blog-detail',
   standalone: true,
   imports: [CommonModule, RouterLink, MarkdownModule, ReadingProgressComponent, CodeBlockCopyButtonComponent, TableOfContentsComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <!-- Reading Progress Bar -->
     <app-reading-progress />
@@ -92,7 +96,7 @@ import { forkJoin } from 'rxjs';
 
           <!-- Article header -->
           <header class="mb-12 animate-slideUp">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-[1.3] pb-1 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
               {{ post()!.title }}
             </h1>
 
@@ -328,6 +332,7 @@ export class BlogDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private markdownService = inject(MarkdownService);
+  private seoService = inject(SeoService);
   private destroyRef = inject(DestroyRef);
   i18nService = inject(I18nService);
 
@@ -356,6 +361,16 @@ export class BlogDetailComponent implements OnInit {
           this.post.set(post);
 
           if (post) {
+            // 設置 SEO Meta Tags 和 Schema.org
+            this.seoService.setArticle(post);
+
+            // 設置麵包屑 Schema
+            this.seoService.setBreadcrumbSchema([
+              { name: '首頁', url: '/' },
+              { name: '部落格', url: '/blog' },
+              { name: post.title, url: `/blog/${post.slug}` }
+            ]);
+
             // If post is part of a series, load series info and navigation
             if (post.series) {
               const series = this.markdownService.getSeriesById(allPosts, post.series);
