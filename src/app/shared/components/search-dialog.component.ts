@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit, signal, inject, HostListener, PLATFORM_ID, DestroyRef } from '@angular/core';
+import { Component, output, signal, inject, HostListener, PLATFORM_ID, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -10,6 +10,7 @@ import { I18nService } from '../../core/services/i18n.service';
   selector: 'app-search-dialog',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <!-- Backdrop -->
     <div
@@ -191,8 +192,9 @@ import { I18nService } from '../../core/services/i18n.service';
     }
   `]
 })
-export class SearchDialogComponent implements OnInit {
-  @Output() closeDialog = new EventEmitter<void>();
+export class SearchDialogComponent {
+  /** 關閉對話框事件 - 使用 Output Function (Angular 20+) */
+  closeDialog = output<void>();
 
   private markdownService = inject(MarkdownService);
   private i18nService = inject(I18nService);
@@ -206,7 +208,7 @@ export class SearchDialogComponent implements OnInit {
   selectedIndex = signal<number>(-1);
   query = '';
 
-  ngOnInit() {
+  constructor() {
     this.markdownService.getAllPosts()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -305,7 +307,7 @@ export class SearchDialogComponent implements OnInit {
   }
 
   close() {
-    this.closeDialog.emit();
+    this.closeDialog.emit();  // output() 使用相同的 emit() API
   }
 
   formatDate(date: string): string {

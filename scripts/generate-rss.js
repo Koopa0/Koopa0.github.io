@@ -3,7 +3,7 @@ const path = require('path');
 
 const SITE_URL = 'https://koopa0.github.io';
 const SITE_TITLE = 'Koopa Blog';
-const SITE_DESCRIPTION = 'Software Engineering & Technology Blog';
+const SITE_DESCRIPTION = 'Software Engineering and Technology Blog';  // 移除 & 符號避免 XML 解析問題
 const AUTHOR_NAME = 'Koopa';
 const AUTHOR_EMAIL = 'your-email@example.com'; // Update this
 

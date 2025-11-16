@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { I18nService } from '../../core/services/i18n.service';
@@ -13,11 +13,14 @@ import { MarkdownService } from '../../core/services/markdown.service';
  * - 自動從文章中提取所有標籤
  * - 計算每個標籤的文章數量
  * - 提供標籤篩選連結
+ *
+ * 性能優化：使用 OnPush Change Detection 配合 Signal
  */
 @Component({
   selector: 'app-tags',
   standalone: true,
   imports: [CommonModule, RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <h1 class="text-4xl font-bold mb-8">{{ t('tags.allTags') }}</h1>
@@ -32,8 +35,10 @@ import { MarkdownService } from '../../core/services/markdown.service';
           }
         </div>
       } @else {
+        @let lang = currentLang();
+        @let tags = tagList();
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          @for (tagInfo of tagList(); track tagInfo.tag) {
+          @for (tagInfo of tags; track tagInfo.tag) {
             <a
               [routerLink]="['/tags', tagInfo.tag.toLowerCase()]"
               class="group p-6 border border-gray-200 dark:border-gray-800 rounded-lg hover:border-blue-500 dark:hover:border-blue-500 transition-all hover:shadow-lg text-center"
@@ -42,7 +47,7 @@ import { MarkdownService } from '../../core/services/markdown.service';
                 {{ t('tags.' + tagInfo.tag.toLowerCase()) }}
               </h3>
               <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                {{ tagInfo.count }} {{ currentLang() === 'zh-TW' ? '篇文章' : 'posts' }}
+                {{ tagInfo.count }} {{ lang === 'zh-TW' ? '篇文章' : 'posts' }}
               </p>
             </a>
           }
