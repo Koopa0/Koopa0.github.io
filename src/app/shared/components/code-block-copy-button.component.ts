@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ElementRef, OnInit, signal, inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 /**
  * Code Block Copy Button Component
@@ -22,8 +22,12 @@ import { CommonModule } from '@angular/common';
 })
 export class CodeBlockCopyButtonComponent implements OnInit {
   private elementRef = ElementRef;
+  private platformId = inject(PLATFORM_ID);
 
   ngOnInit() {
+    // Only run in browser environment
+    if (!isPlatformBrowser(this.platformId)) return;
+
     // Wait for the DOM to be ready
     setTimeout(() => {
       this.attachCopyButtons();
@@ -31,6 +35,8 @@ export class CodeBlockCopyButtonComponent implements OnInit {
   }
 
   private attachCopyButtons() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     const preElements = document.querySelectorAll('pre');
 
     preElements.forEach((pre) => {
