@@ -96,8 +96,8 @@ import { MarkdownService, SeriesInfo, PostMetadata } from '../../core/services/m
 
             <!-- Articles List -->
             <div class="space-y-4">
-              @for (post of series()!.posts; track post.slug; let i = $index) {
-                <article class="group" [style.animation-delay]="(i * 0.05) + 's'">
+              @for (post of series()!.posts; track post.slug) {
+                <article class="group">
                   <a
                     [routerLink]="['/blog', post.slug]"
                     class="flex items-start gap-6 p-6 border-2 border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl hover:border-purple-500 dark:hover:border-purple-400 transition-all duration-300 hover:shadow-card dark:hover:shadow-card-dark hover:-translate-y-0.5"

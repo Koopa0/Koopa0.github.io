@@ -41,8 +41,8 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
         </div>
       } @else if (posts().length > 0) {
         <div class="space-y-6">
-          @for (post of posts(); track post.slug; let i = $index) {
-            <article class="group animate-slideUp" [style.animation-delay]="(i * 0.1) + 's'">
+          @for (post of posts(); track post.slug) {
+            <article class="group animate-slideUp">
               <a
                 [routerLink]="['/blog', post.slug]"
                 class="block relative overflow-hidden border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-card-hover dark:hover:shadow-card-dark-hover hover:-translate-y-1"
@@ -110,9 +110,22 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
                   }
 
                   <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-500">
-                    <time [attr.datetime]="post.date" class="font-medium">
+                    <time [attr.datetime]="post.date" class="flex items-center gap-1.5 font-medium">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
                       {{ formatDate(post.date) }}
                     </time>
+
+                    @if (post.readingTime) {
+                      <span class="text-gray-300 dark:text-gray-700">•</span>
+                      <span class="flex items-center gap-1.5 font-medium">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {{ post.readingTime }} {{ currentLang() === 'zh-TW' ? '分鐘' : 'min' }}
+                      </span>
+                    }
 
                     @if (post.tags && post.tags.length > 0) {
                       <span class="text-gray-300 dark:text-gray-700">•</span>

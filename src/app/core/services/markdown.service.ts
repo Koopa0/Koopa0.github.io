@@ -9,6 +9,7 @@ export interface PostMetadata {
   tags: string[];
   description?: string;
   slug: string;
+  readingTime?: number;   // Reading time in minutes
   // Phase 1-3: Content classification
   category?: string;      // tutorial-series | tutorial | daily | note | project
   series?: string;        // Series identifier (e.g., 'golang-advanced')

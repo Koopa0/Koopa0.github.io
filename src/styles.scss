@@ -233,15 +233,13 @@ body.light::-webkit-scrollbar-thumb:hover {
   @extend .prose;
 }
 
-/* Animation utilities */
+/* Animation utilities - Optimized for smooth rendering */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -259,7 +257,57 @@ body.light::-webkit-scrollbar-thumb:hover {
 }
 
 .animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
   animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Prevent layout shift and flashing */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-slideUp {
+    animation: slideUpSmooth 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-slideUp {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
+@keyframes slideUpSmooth {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Prevent flash of unstyled content */
+[ng-version] {
+  visibility: hidden;
+}
+
+[ng-version].hydrated {
+  visibility: visible;
+}
+
+/* GPU acceleration for animations */
+.animate-slideUp,
+.animate-float,
+.animate-glow {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 /* Focus visible for accessibility */

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Koopa Blog</title>
+    <link>https://koopa0.github.io</link>
+    <description>Software Engineering & Technology Blog</description>
+    <language>zh-TW</language>
+    <lastBuildDate>Sun, 16 Nov 2025 04:54:42 GMT</lastBuildDate>
+    <atom:link href="https://koopa0.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title><![CDATA[如何在 Koopa 部落格新增文章]]></title>
+      <link>https://koopa0.github.io/blog/getting-started</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/getting-started</guid>
+      <pubDate>Sat, 15 Nov 2025 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[完整指南：如何在這個 Angular 部落格中建立和發布新文章，包含 Markdown 語法和 Front Matter 設定。]]></description>
+      
+      <category>system</category>
+    </item>
+    <item>
+      <title><![CDATA[Angular Signals 完整指南]]></title>
+      <link>https://koopa0.github.io/blog/angular-signals-guide</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/angular-signals-guide</guid>
+      <pubDate>Sat, 15 Nov 2025 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[深入探討 Angular 16+ 引入的 Signals API，了解如何使用 Signals 進行響應式狀態管理，以及 Signals 與 RxJS 的差異和使用時機。]]></description>
+      
+      <category>google</category>
+      <category>angular</category>
+    </item>
+    <item>
+      <title><![CDATA[Go 並發模式詳解]]></title>
+      <link>https://koopa0.github.io/blog/golang-concurrency-patterns</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/golang-concurrency-patterns</guid>
+      <pubDate>Fri, 14 Nov 2025 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[深入探討 Go 語言的並發模式，包含 goroutines、channels 和 select 語句的實用範例。]]></description>
+      
+      <category>golang</category>
+      <category>system</category>
+    </item>
+    <item>
+      <title><![CDATA[Rust 所有權系統完全指南]]></title>
+      <link>https://koopa0.github.io/blog/rust-ownership-guide</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/rust-ownership-guide</guid>
+      <pubDate>Thu, 13 Nov 2025 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[理解 Rust 的所有權、借用和生命週期概念，以及如何運用這些特性寫出安全高效的程式碼。]]></description>
+      
+      <category>rust</category>
+      <category>system</category>
+    </item>
+    <item>
+      <title><![CDATA[二元搜尋樹實作與應用]]></title>
+      <link>https://koopa0.github.io/blog/binary-search-tree</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/binary-search-tree</guid>
+      <pubDate>Wed, 12 Nov 2025 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[從零開始實作二元搜尋樹，包含插入、刪除、搜尋和遍歷操作，以及時間複雜度分析。]]></description>
+      
+      <category>algorithm</category>
+    </item>
+    <item>
+      <title><![CDATA[微服務架構設計原則]]></title>
+      <link>https://koopa0.github.io/blog/microservices-architecture</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/microservices-architecture</guid>
+      <pubDate>Tue, 11 Nov 2025 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[探討微服務架構的核心概念、設計原則與最佳實踐，包含服務拆分、通訊模式和資料管理。]]></description>
+      
+      <category>system</category>
+    </item>
+    <item>
+      <title><![CDATA[SQL 查詢優化技巧]]></title>
+      <link>https://koopa0.github.io/blog/sql-optimization</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/sql-optimization</guid>
+      <pubDate>Mon, 10 Nov 2025 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[學習如何優化 SQL 查詢效能，包含索引策略、查詢計畫分析和常見的效能陷阱。]]></description>
+      
+      <category>sql</category>
+    </item>
+    <item>
+      <title><![CDATA[Transformer 架構深度解析]]></title>
+      <link>https://koopa0.github.io/blog/transformer-architecture</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/transformer-architecture</guid>
+      <pubDate>Sun, 09 Nov 2025 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[深入理解 Transformer 模型的核心機制，包含自注意力機制、位置編碼和多頭注意力的實作細節。]]></description>
+      
+      <category>ai</category>
+    </item>
+    <item>
+      <title><![CDATA[Google SRE 實踐指南]]></title>
+      <link>https://koopa0.github.io/blog/google-sre-practices</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/google-sre-practices</guid>
+      <pubDate>Sat, 08 Nov 2025 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[學習 Google 的 Site Reliability Engineering 實踐，包含 SLO/SLI、錯誤預算和事故管理。]]></description>
+      
+      <category>google</category>
+      <category>system</category>
+    </item>
+    <item>
+      <title><![CDATA[Flutter 狀態管理完整指南]]></title>
+      <link>https://koopa0.github.io/blog/flutter-state-management</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/flutter-state-management</guid>
+      <pubDate>Fri, 07 Nov 2025 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[比較 Flutter 各種狀態管理方案，包含 Provider、Riverpod、Bloc 和 GetX 的優缺點與使用場景。]]></description>
+      
+      <category>flutter</category>
+    </item>
+    <item>
+      <title><![CDATA[最近學習 Rust 的心得與感想]]></title>
+      <link>https://koopa0.github.io/blog/my-rust-learning-journey</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/my-rust-learning-journey</guid>
+      <pubDate>Sun, 10 Mar 2024 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[分享最近從 Golang 轉 Rust 的一些體會和心路歷程]]></description>
+      <category>daily</category>
+      <category>Rust</category>
+      <category>Learning</category>
+    </item>
+    <item>
+      <title><![CDATA[如何在 Golang 中實現 LRU Cache]]></title>
+      <link>https://koopa0.github.io/blog/lru-cache-implementation</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/lru-cache-implementation</guid>
+      <pubDate>Thu, 01 Feb 2024 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[從零開始實現一個線程安全的 LRU Cache，並分析時間複雜度]]></description>
+      <category>tutorial</category>
+      <category>Golang</category>
+      <category>Algorithm</category>
+      <category>Cache</category>
+      <category>Data Structure</category>
+    </item>
+    <item>
+      <title><![CDATA[Golang 進階系列 (2) - Select 語句與並發控制]]></title>
+      <link>https://koopa0.github.io/blog/golang-advanced-02-select</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/golang-advanced-02-select</guid>
+      <pubDate>Mon, 22 Jan 2024 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[深入理解 select 語句的工作原理和並發控制模式]]></description>
+      <category>tutorial-series</category>
+      <category>Golang</category>
+      <category>Concurrency</category>
+      <category>Select</category>
+    </item>
+    <item>
+      <title><![CDATA[Golang 進階系列 (1) - Channel 深入解析]]></title>
+      <link>https://koopa0.github.io/blog/golang-advanced-01-channel</link>
+      <guid isPermaLink="true">https://koopa0.github.io/blog/golang-advanced-01-channel</guid>
+      <pubDate>Mon, 15 Jan 2024 00:00:00 GMT</pubDate>
+      <author>your-email@example.com (Koopa)</author>
+      <description><![CDATA[深入探討 Golang Channel 的實現原理、使用場景和最佳實踐]]></description>
+      <category>tutorial-series</category>
+      <category>Golang</category>
+      <category>Concurrency</category>
+      <category>Channel</category>
+    </item>
+  </channel>
+</rss>
