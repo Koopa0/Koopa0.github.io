@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, OnInit, signal, inject, HostListener, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MarkdownService, PostMetadata } from '../../core/services/markdown.service';
 import { I18nService } from '../../core/services/i18n.service';
 
@@ -53,11 +53,14 @@ import { I18nService } from '../../core/services/i18n.service';
         <div class="max-h-[60vh] overflow-y-auto p-2">
           @if (query && filteredPosts().length > 0) {
             <div class="space-y-1">
-              @for (post of filteredPosts(); track post.slug) {
+              @for (post of filteredPosts(); track post.slug; let i = $index) {
                 <a
                   [routerLink]="['/blog', post.slug]"
                   (click)="close()"
-                  class="group block p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                  [class]="'group block p-4 rounded-xl transition-colors ' +
+                          (i === selectedIndex()
+                            ? 'bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-500 dark:border-blue-400'
+                            : 'hover:bg-gray-50 dark:hover:bg-gray-800 border-2 border-transparent')"
                 >
                   <!-- Category Badge -->
                   @if (post.category) {
@@ -193,10 +196,12 @@ export class SearchDialogComponent implements OnInit {
   private markdownService = inject(MarkdownService);
   private i18nService = inject(I18nService);
   private platformId = inject(PLATFORM_ID);
+  private router = inject(Router);
 
   currentLang = this.i18nService.currentLang;
   allPosts = signal<PostMetadata[]>([]);
   filteredPosts = signal<PostMetadata[]>([]);
+  selectedIndex = signal<number>(-1);
   query = '';
 
   ngOnInit() {
@@ -214,11 +219,54 @@ export class SearchDialogComponent implements OnInit {
     this.close();
   }
 
+  @HostListener('document:keydown.arrowdown')
+  onArrowDown() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (this.filteredPosts().length === 0) return;
+
+    const currentIndex = this.selectedIndex();
+    const maxIndex = this.filteredPosts().length - 1;
+
+    if (currentIndex < maxIndex) {
+      this.selectedIndex.set(currentIndex + 1);
+    } else {
+      this.selectedIndex.set(0); // Loop back to start
+    }
+  }
+
+  @HostListener('document:keydown.arrowup')
+  onArrowUp() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (this.filteredPosts().length === 0) return;
+
+    const currentIndex = this.selectedIndex();
+    const maxIndex = this.filteredPosts().length - 1;
+
+    if (currentIndex > 0) {
+      this.selectedIndex.set(currentIndex - 1);
+    } else {
+      this.selectedIndex.set(maxIndex); // Loop to end
+    }
+  }
+
+  @HostListener('document:keydown.enter')
+  onEnter() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const index = this.selectedIndex();
+
+    if (index >= 0 && index < this.filteredPosts().length) {
+      const selectedPost = this.filteredPosts()[index];
+      this.router.navigate(['/blog', selectedPost.slug]);
+      this.close();
+    }
+  }
+
   search() {
     const q = this.query.toLowerCase().trim();
 
     if (!q) {
       this.filteredPosts.set([]);
+      this.selectedIndex.set(-1);
       return;
     }
 
@@ -242,11 +290,14 @@ export class SearchDialogComponent implements OnInit {
     });
 
     this.filteredPosts.set(results);
+    // Reset selection to first item when search results change
+    this.selectedIndex.set(results.length > 0 ? 0 : -1);
   }
 
   clearSearch() {
     this.query = '';
     this.filteredPosts.set([]);
+    this.selectedIndex.set(-1);
   }
 
   close() {
