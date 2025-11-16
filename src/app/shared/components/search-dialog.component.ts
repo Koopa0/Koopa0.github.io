@@ -1,7 +1,8 @@
-import { Component, Output, EventEmitter, OnInit, signal, inject, HostListener, PLATFORM_ID } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, signal, inject, HostListener, PLATFORM_ID, DestroyRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MarkdownService, PostMetadata } from '../../core/services/markdown.service';
 import { I18nService } from '../../core/services/i18n.service';
 
@@ -197,6 +198,7 @@ export class SearchDialogComponent implements OnInit {
   private i18nService = inject(I18nService);
   private platformId = inject(PLATFORM_ID);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   currentLang = this.i18nService.currentLang;
   allPosts = signal<PostMetadata[]>([]);
@@ -205,11 +207,13 @@ export class SearchDialogComponent implements OnInit {
   query = '';
 
   ngOnInit() {
-    this.markdownService.getAllPosts().subscribe({
-      next: (posts) => {
-        this.allPosts.set(posts);
-      }
-    });
+    this.markdownService.getAllPosts()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (posts) => {
+          this.allPosts.set(posts);
+        }
+      });
   }
 
   @HostListener('document:keydown.escape')
