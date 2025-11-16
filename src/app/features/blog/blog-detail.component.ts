@@ -6,6 +6,7 @@ import { MarkdownService, Post, PostMetadata, SeriesInfo } from '../../core/serv
 import { I18nService } from '../../core/services/i18n.service';
 import { ReadingProgressComponent } from '../../shared/components/reading-progress.component';
 import { CodeBlockCopyButtonComponent } from '../../shared/components/code-block-copy-button.component';
+import { TableOfContentsComponent } from '../../shared/components/table-of-contents.component';
 import { forkJoin } from 'rxjs';
 
 /**
@@ -25,7 +26,7 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-blog-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, MarkdownModule, ReadingProgressComponent, CodeBlockCopyButtonComponent],
+  imports: [CommonModule, RouterLink, MarkdownModule, ReadingProgressComponent, CodeBlockCopyButtonComponent, TableOfContentsComponent],
   template: `
     <!-- Reading Progress Bar -->
     <app-reading-progress />
@@ -62,9 +63,9 @@ import { forkJoin } from 'rxjs';
           </div>
         </div>
       } @else if (post()) {
-        <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <!-- Back button -->
-          <div class="mb-8">
+          <div class="mb-8 max-w-3xl mx-auto lg:mx-0">
             <a
               routerLink="/blog"
               class="group inline-flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300"
@@ -75,6 +76,11 @@ import { forkJoin } from 'rxjs';
               {{ t('blog.allPosts') }}
             </a>
           </div>
+
+          <!-- Two Column Layout -->
+          <div class="flex gap-8">
+            <!-- Main Content -->
+            <article class="flex-1 min-w-0 max-w-3xl animate-fadeIn">
 
           <!-- Article header -->
           <header class="mb-12 animate-slideUp">
@@ -111,6 +117,11 @@ import { forkJoin } from 'rxjs';
             <!-- Divider -->
             <div class="mt-8 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full w-24"></div>
           </header>
+
+          <!-- Mobile TOC -->
+          <div class="lg:hidden mb-8">
+            <app-table-of-contents [content]="post()!.content" />
+          </div>
 
           <!-- Article content -->
           <div class="relative">
@@ -228,7 +239,74 @@ import { forkJoin } from 'rxjs';
               </div>
             </div>
           }
-        </article>
+
+          <!-- Related Posts -->
+          @if (relatedPosts().length > 0) {
+            <div class="mt-16 border-t border-gray-200 dark:border-gray-800 pt-12">
+              <h2 class="text-2xl font-bold mb-8 flex items-center gap-3 text-gray-900 dark:text-gray-100">
+                <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                {{ currentLang() === 'zh-TW' ? '相關文章' : 'Related Articles' }}
+              </h2>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                @for (relatedPost of relatedPosts(); track relatedPost.slug) {
+                  <a
+                    [routerLink]="['/blog', relatedPost.slug]"
+                    class="group block p-6 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                  >
+                    <!-- Category Badge -->
+                    @if (relatedPost.category) {
+                      <div class="mb-3">
+                        @if (relatedPost.category === 'tutorial-series') {
+                          <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 text-xs font-semibold">
+                            {{ currentLang() === 'zh-TW' ? '系列' : 'Series' }}
+                          </span>
+                        } @else if (relatedPost.category === 'tutorial') {
+                          <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-semibold">
+                            {{ currentLang() === 'zh-TW' ? '教學' : 'Tutorial' }}
+                          </span>
+                        } @else if (relatedPost.category === 'daily') {
+                          <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-semibold">
+                            {{ currentLang() === 'zh-TW' ? '日常' : 'Daily' }}
+                          </span>
+                        }
+                      </div>
+                    }
+
+                    <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+                      {{ relatedPost.title }}
+                    </h3>
+
+                    @if (relatedPost.description) {
+                      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                        {{ relatedPost.description }}
+                      </p>
+                    }
+
+                    <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-500">
+                      <time [attr.datetime]="relatedPost.date">
+                        {{ formatDate(relatedPost.date) }}
+                      </time>
+                      @if (relatedPost.readingTime) {
+                        <span>•</span>
+                        <span>{{ relatedPost.readingTime }} {{ currentLang() === 'zh-TW' ? '分鐘' : 'min' }}</span>
+                      }
+                    </div>
+                  </a>
+                }
+              </div>
+            </div>
+          }
+            </article>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="hidden lg:block">
+              <app-table-of-contents [content]="post()!.content" />
+            </aside>
+          </div>
+        </div>
       } @else {
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
           <h2 class="text-2xl font-bold mb-4">{{ t('blog.noPostsFound') }}</h2>
@@ -254,6 +332,7 @@ export class BlogDetailComponent implements OnInit {
   loading = signal(true);
   seriesInfo = signal<SeriesInfo | null>(null);
   seriesNav: { previous: PostMetadata | null; next: PostMetadata | null } = { previous: null, next: null };
+  relatedPosts = signal<PostMetadata[]>([]);
 
   ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug');
@@ -262,7 +341,7 @@ export class BlogDetailComponent implements OnInit {
       return;
     }
 
-    // Load post and all posts for series navigation
+    // Load post and all posts for series navigation and related posts
     forkJoin({
       post: this.markdownService.getPost(slug),
       allPosts: this.markdownService.getAllPosts()
@@ -270,11 +349,17 @@ export class BlogDetailComponent implements OnInit {
       next: ({ post, allPosts }) => {
         this.post.set(post);
 
-        // If post is part of a series, load series info and navigation
-        if (post?.series) {
-          const series = this.markdownService.getSeriesById(allPosts, post.series);
-          this.seriesInfo.set(series);
-          this.seriesNav = this.markdownService.getSeriesNavigation(post, allPosts);
+        if (post) {
+          // If post is part of a series, load series info and navigation
+          if (post.series) {
+            const series = this.markdownService.getSeriesById(allPosts, post.series);
+            this.seriesInfo.set(series);
+            this.seriesNav = this.markdownService.getSeriesNavigation(post, allPosts);
+          }
+
+          // Load related posts based on tags
+          const related = this.markdownService.getRelatedPosts(post, allPosts, 3);
+          this.relatedPosts.set(related);
         }
 
         this.loading.set(false);
