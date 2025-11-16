@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { I18nService } from '../../core/services/i18n.service';
@@ -8,19 +8,21 @@ import { MarkdownService, SeriesInfo } from '../../core/services/markdown.servic
   selector: 'app-series-list',
   standalone: true,
   imports: [CommonModule, RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="relative">
       <!-- Gradient Background -->
       <div class="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-dark-bg-primary dark:to-gray-900 -z-10"></div>
 
+      @let lang = currentLang();
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <!-- Header -->
         <div class="mb-16 animate-slideUp">
           <h1 class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent">
-            {{ currentLang() === 'zh-TW' ? '系列教學' : 'Tutorial Series' }}
+            {{ lang === 'zh-TW' ? '系列教學' : 'Tutorial Series' }}
           </h1>
           <p class="text-lg text-gray-600 dark:text-gray-400 mb-4">
-            {{ currentLang() === 'zh-TW'
+            {{ lang === 'zh-TW'
               ? '探索深入的系列教學，一步步掌握技術知識'
               : 'Explore in-depth tutorial series and master technical knowledge step by step'
             }}
@@ -45,9 +47,9 @@ import { MarkdownService, SeriesInfo } from '../../core/services/markdown.servic
               </div>
             }
           </div>
-        } @else if (series().length > 0) {
+        } @else if (series(); as seriesList) {
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            @for (s of series(); track s.id) {
+            @for (s of seriesList; track s.id) {
               <article class="group animate-slideUp">
                 <a
                   [routerLink]="['/series', s.id]"
