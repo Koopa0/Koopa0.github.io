@@ -1,7 +1,8 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MarkdownService, Post, PostMetadata, SeriesInfo } from '../../core/services/markdown.service';
 import { I18nService } from '../../core/services/i18n.service';
 import { ReadingProgressComponent } from '../../shared/components/reading-progress.component';
@@ -79,6 +80,11 @@ import { forkJoin } from 'rxjs';
 
           <!-- Two Column Layout -->
           <div class="flex gap-8">
+            <!-- Table of Contents Sidebar (Desktop - Left) -->
+            <aside class="hidden lg:block">
+              <app-table-of-contents [content]="post()!.content" />
+            </aside>
+
             <!-- Main Content -->
             <article class="flex-1 min-w-0 max-w-3xl animate-fadeIn">
 
@@ -300,11 +306,6 @@ import { forkJoin } from 'rxjs';
             </div>
           }
             </article>
-
-            <!-- Table of Contents Sidebar -->
-            <aside class="hidden lg:block">
-              <app-table-of-contents [content]="post()!.content" />
-            </aside>
           </div>
         </div>
       } @else {
@@ -325,6 +326,7 @@ export class BlogDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private markdownService = inject(MarkdownService);
+  private destroyRef = inject(DestroyRef);
   i18nService = inject(I18nService);
 
   currentLang = this.i18nService.currentLang;
@@ -345,30 +347,32 @@ export class BlogDetailComponent implements OnInit {
     forkJoin({
       post: this.markdownService.getPost(slug),
       allPosts: this.markdownService.getAllPosts()
-    }).subscribe({
-      next: ({ post, allPosts }) => {
-        this.post.set(post);
+    })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: ({ post, allPosts }) => {
+          this.post.set(post);
 
-        if (post) {
-          // If post is part of a series, load series info and navigation
-          if (post.series) {
-            const series = this.markdownService.getSeriesById(allPosts, post.series);
-            this.seriesInfo.set(series);
-            this.seriesNav = this.markdownService.getSeriesNavigation(post, allPosts);
+          if (post) {
+            // If post is part of a series, load series info and navigation
+            if (post.series) {
+              const series = this.markdownService.getSeriesById(allPosts, post.series);
+              this.seriesInfo.set(series);
+              this.seriesNav = this.markdownService.getSeriesNavigation(post, allPosts);
+            }
+
+            // Load related posts based on tags
+            const related = this.markdownService.getRelatedPosts(post, allPosts, 3);
+            this.relatedPosts.set(related);
           }
 
-          // Load related posts based on tags
-          const related = this.markdownService.getRelatedPosts(post, allPosts, 3);
-          this.relatedPosts.set(related);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.loading.set(false);
+          this.router.navigate(['/blog']);
         }
-
-        this.loading.set(false);
-      },
-      error: () => {
-        this.loading.set(false);
-        this.router.navigate(['/blog']);
-      }
-    });
+      });
   }
 
   formatDate(date: string): string {

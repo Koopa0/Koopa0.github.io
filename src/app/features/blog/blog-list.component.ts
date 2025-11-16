@@ -1,6 +1,7 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
 import { MarkdownService, PostMetadata } from '../../core/services/markdown.service';
 
@@ -175,21 +176,24 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
 export class BlogListComponent implements OnInit {
   i18nService = inject(I18nService);
   private markdownService = inject(MarkdownService);
+  private destroyRef = inject(DestroyRef);
 
   currentLang = this.i18nService.currentLang;
   posts = signal<PostMetadata[]>([]);
   loading = signal(true);
 
   ngOnInit() {
-    this.markdownService.getAllPosts().subscribe({
-      next: (posts) => {
-        this.posts.set(posts);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.loading.set(false);
-      }
-    });
+    this.markdownService.getAllPosts()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (posts) => {
+          this.posts.set(posts);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.loading.set(false);
+        }
+      });
   }
 
   formatDate(date: string): string {
