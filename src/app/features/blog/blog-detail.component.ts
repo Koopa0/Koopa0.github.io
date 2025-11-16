@@ -78,14 +78,16 @@ import { forkJoin } from 'rxjs';
             </a>
           </div>
 
-          <!-- Two Column Layout -->
-          <div class="flex gap-8">
+          <!-- Two Column Layout: TOC on left, Article on right -->
+          <div class="flex gap-12 lg:gap-16">
             <!-- Table of Contents Sidebar (Desktop - Left) -->
-            <aside class="hidden lg:block">
+            <!-- 目錄側邊欄：桌面版顯示在左側，sticky 定位保持在視窗內 -->
+            <aside class="hidden lg:block flex-shrink-0">
               <app-table-of-contents [content]="post()!.content" />
             </aside>
 
             <!-- Main Content -->
+            <!-- 文章主內容：使用 flex-1 佔據剩餘空間，max-w-3xl 限制最大寬度提升閱讀體驗 -->
             <article class="flex-1 min-w-0 max-w-3xl animate-fadeIn">
 
           <!-- Article header -->
