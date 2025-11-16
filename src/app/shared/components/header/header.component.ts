@@ -39,6 +39,20 @@ import { I18nService } from '../../../core/services/i18n.service';
               {{ t('nav.home') }}
             </a>
             <a
+              routerLink="/blog"
+              routerLinkActive="bg-gray-100 dark:bg-gray-800"
+              class="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              {{ t('nav.blog') }}
+            </a>
+            <a
+              routerLink="/tags"
+              routerLinkActive="bg-gray-100 dark:bg-gray-800"
+              class="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              {{ t('nav.tags') }}
+            </a>
+            <a
               routerLink="/about"
               routerLinkActive="bg-gray-100 dark:bg-gray-800"
               class="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -77,6 +91,22 @@ import { I18nService } from '../../../core/services/i18n.service';
               class="block px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               {{ t('nav.home') }}
+            </a>
+            <a
+              routerLink="/blog"
+              (click)="closeMobileMenu()"
+              routerLinkActive="bg-gray-100 dark:bg-gray-800"
+              class="block px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              {{ t('nav.blog') }}
+            </a>
+            <a
+              routerLink="/tags"
+              (click)="closeMobileMenu()"
+              routerLinkActive="bg-gray-100 dark:bg-gray-800"
+              class="block px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              {{ t('nav.tags') }}
             </a>
             <a
               routerLink="/about"

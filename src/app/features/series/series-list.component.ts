@@ -47,8 +47,8 @@ import { MarkdownService, SeriesInfo } from '../../core/services/markdown.servic
           </div>
         } @else if (series().length > 0) {
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            @for (s of series(); track s.id; let i = $index) {
-              <article class="group animate-slideUp" [style.animation-delay]="(i * 0.1) + 's'">
+            @for (s of series(); track s.id) {
+              <article class="group animate-slideUp">
                 <a
                   [routerLink]="['/series', s.id]"
                   class="block relative overflow-hidden border-2 border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 hover:border-purple-500 dark:hover:border-purple-400 transition-all duration-300 hover:shadow-card-hover dark:hover:shadow-card-dark-hover hover:-translate-y-1"

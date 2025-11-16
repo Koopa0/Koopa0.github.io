@@ -41,8 +41,8 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
         </div>
       } @else if (posts().length > 0) {
         <div class="space-y-6">
-          @for (post of posts(); track post.slug; let i = $index) {
-            <article class="group animate-slideUp" [style.animation-delay]="(i * 0.1) + 's'">
+          @for (post of posts(); track post.slug) {
+            <article class="group animate-slideUp">
               <a
                 [routerLink]="['/blog', post.slug]"
                 class="block relative overflow-hidden border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-card-hover dark:hover:shadow-card-dark-hover hover:-translate-y-1"
