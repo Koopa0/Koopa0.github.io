@@ -79,6 +79,11 @@ import { forkJoin } from 'rxjs';
 
           <!-- Two Column Layout -->
           <div class="flex gap-8">
+            <!-- Table of Contents Sidebar (Desktop - Left) -->
+            <aside class="hidden lg:block">
+              <app-table-of-contents [content]="post()!.content" />
+            </aside>
+
             <!-- Main Content -->
             <article class="flex-1 min-w-0 max-w-3xl animate-fadeIn">
 
@@ -300,11 +305,6 @@ import { forkJoin } from 'rxjs';
             </div>
           }
             </article>
-
-            <!-- Table of Contents Sidebar -->
-            <aside class="hidden lg:block">
-              <app-table-of-contents [content]="post()!.content" />
-            </aside>
           </div>
         </div>
       } @else {
