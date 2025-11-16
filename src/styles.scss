@@ -292,15 +292,6 @@ body.light::-webkit-scrollbar-thumb:hover {
   }
 }
 
-/* Prevent flash of unstyled content */
-[ng-version] {
-  visibility: hidden;
-}
-
-[ng-version].hydrated {
-  visibility: visible;
-}
-
 /* GPU acceleration for animations */
 .animate-slideUp,
 .animate-float,
