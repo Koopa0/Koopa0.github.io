@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, signal, inject, PLATFORM_ID, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, OnInit, OnDestroy, signal, inject, PLATFORM_ID, ChangeDetectionStrategy, effect } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { I18nService } from '../../core/services/i18n.service';
 
@@ -11,12 +11,14 @@ import { I18nService } from '../../core/services/i18n.service';
  * 3. 桌面版：左側 sticky 固定目錄，方便導航
  * 4. 行動版：可摺疊的目錄按鈕
  *
- * Angular 最佳實踐：
- * - 使用 Signal API 管理狀態 (toc, activeId, mobileTocOpen)
- * - 使用 inject() 函數注入依賴而非 constructor
- * - 實作 OnDestroy 清理 IntersectionObserver 避免記憶體洩漏
- * - 使用 isPlatformBrowser 確保 DOM 操作只在瀏覽器執行 (SSR 相容)
- * - 使用 OnPush Change Detection 提升性能（配合 Signal 使用）
+ * Angular 最佳實踐 (Angular 20)：
+ * - ✅ 使用 Input Signals 而非 @Input() 裝飾器
+ * - ✅ 使用 Signal API 管理狀態 (toc, activeId, mobileTocOpen)
+ * - ✅ 使用 inject() 函數注入依賴而非 constructor
+ * - ✅ 使用 effect() 監聽 Input Signal 變化
+ * - ✅ 實作 OnDestroy 清理 IntersectionObserver 避免記憶體洩漏
+ * - ✅ 使用 isPlatformBrowser 確保 DOM 操作只在瀏覽器執行 (SSR 相容)
+ * - ✅ 使用 OnPush Change Detection 提升性能（配合 Signal 使用）
  */
 export interface TocItem {
   level: number;    // 標題層級 (2 = H2, 3 = H3)
@@ -141,10 +143,10 @@ export interface TocItem {
   `]
 })
 export class TableOfContentsComponent implements OnInit, OnDestroy {
-  /** Markdown 文章內容 (從父組件傳入) */
-  @Input() content: string = '';
+  /** Markdown 文章內容 (從父組件傳入) - 使用 Input Signal (Angular 20+) */
+  content = input.required<string>();
 
-  // Angular 依賴注入 - 使用 inject() 函數 (Angular 14+ 推薦方式)
+  // Angular 依賴注入 - 使用 inject() 函數
   i18nService = inject(I18nService);
   private platformId = inject(PLATFORM_ID);
   currentLang = this.i18nService.currentLang;
@@ -158,14 +160,24 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
   private observer?: IntersectionObserver;
   private headingElements: Element[] = [];
 
-  ngOnInit() {
-    // 從 Markdown 內容提取標題生成目錄
-    this.extractToc();
+  constructor() {
+    // 使用 effect 監聽 content Input Signal 的變化
+    effect(() => {
+      const contentValue = this.content();
+      if (contentValue) {
+        this.extractToc(contentValue);
 
-    // SSR 相容性：只在瀏覽器環境執行 DOM 操作
-    if (isPlatformBrowser(this.platformId)) {
-      this.setupIntersectionObserver();
-    }
+        // SSR 相容性：只在瀏覽器環境執行 DOM 操作
+        if (isPlatformBrowser(this.platformId)) {
+          // 使用 setTimeout 確保 DOM 已更新
+          setTimeout(() => this.setupIntersectionObserver(), 100);
+        }
+      }
+    });
+  }
+
+  ngOnInit() {
+    // 不再需要在 ngOnInit 中初始化，effect 會自動處理
   }
 
   /**
@@ -184,10 +196,10 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
    *
    * 重要修正：排除代碼塊內的標題，避免提取示例代碼中的標題
    */
-  private extractToc() {
+  private extractToc(content: string) {
     // 先移除所有代碼塊（避免匹配到代碼塊內的標題）
     // 使用正則表達式移除 ```...``` 之間的內容
-    const contentWithoutCodeBlocks = this.content.replace(/```[\s\S]*?```/g, '');
+    const contentWithoutCodeBlocks = content.replace(/```[\s\S]*?```/g, '');
 
     // 正則表達式：匹配 Markdown 標題 (## 或 ### 開頭)
     const headingRegex = /^(#{1,6})\s+(.+)$/gm;

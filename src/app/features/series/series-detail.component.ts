@@ -1,9 +1,9 @@
-import { Component, inject, OnInit, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
-import { MarkdownService, SeriesInfo, PostMetadata } from '../../core/services/markdown.service';
+import { MarkdownService, SeriesInfo } from '../../core/services/markdown.service';
 
 @Component({
   selector: 'app-series-detail',
@@ -203,7 +203,7 @@ import { MarkdownService, SeriesInfo, PostMetadata } from '../../core/services/m
     </div>
   `
 })
-export class SeriesDetailComponent implements OnInit {
+export class SeriesDetailComponent {
   i18nService = inject(I18nService);
   private markdownService = inject(MarkdownService);
   private route = inject(ActivatedRoute);
@@ -214,7 +214,7 @@ export class SeriesDetailComponent implements OnInit {
   series = signal<SeriesInfo | null>(null);
   loading = signal(true);
 
-  ngOnInit() {
+  constructor() {
     // 訂閱路由參數變化，解決 OnPush 模式下的導航問題
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))

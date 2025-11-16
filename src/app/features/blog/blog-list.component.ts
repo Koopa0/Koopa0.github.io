@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -153,6 +153,7 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
           }
         </div>
       } @else {
+        <!-- No Posts -->
         <div class="text-center py-20 animate-fadeIn">
           <div class="mb-6">
             <svg class="w-24 h-24 mx-auto text-gray-300 dark:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -174,7 +175,7 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
     </div>
   `
 })
-export class BlogListComponent implements OnInit {
+export class BlogListComponent {
   i18nService = inject(I18nService);
   private markdownService = inject(MarkdownService);
   private destroyRef = inject(DestroyRef);
@@ -183,7 +184,8 @@ export class BlogListComponent implements OnInit {
   posts = signal<PostMetadata[]>([]);
   loading = signal(true);
 
-  ngOnInit() {
+  constructor() {
+    // 使用 constructor 代替 ngOnInit - Angular 20 best practice
     this.markdownService.getAllPosts()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({

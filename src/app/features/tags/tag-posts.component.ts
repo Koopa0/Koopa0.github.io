@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -116,7 +116,7 @@ import { I18nService } from '../../core/services/i18n.service';
     </div>
   `
 })
-export class TagPostsComponent implements OnInit {
+export class TagPostsComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private markdownService = inject(MarkdownService);
@@ -128,7 +128,7 @@ export class TagPostsComponent implements OnInit {
   posts = signal<PostMetadata[]>([]);
   loading = signal(true);
 
-  ngOnInit() {
+  constructor() {
     // 訂閱路由參數變化，解決 OnPush 模式下的標籤導航問題
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))

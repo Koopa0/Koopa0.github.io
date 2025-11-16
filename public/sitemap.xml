@@ -5,25 +5,25 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>https://koopa0.github.io</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/blog</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/about</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -113,109 +113,109 @@
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/system</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/google</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/angular</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/golang</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/rust</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/algorithm</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/sql</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/ai</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/flutter</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/rust</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/learning</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/golang</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/algorithm</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/cache</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/data structure</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/concurrency</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/select</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://koopa0.github.io/tags/channel</loc>
-    <lastmod>2025-11-16T13:19:33.620Z</lastmod>
+    <lastmod>2025-11-16T13:56:16.889Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
