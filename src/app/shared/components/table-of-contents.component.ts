@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, signal, inject, PLATFORM_ID } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, signal, inject, PLATFORM_ID, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { I18nService } from '../../core/services/i18n.service';
 
@@ -16,6 +16,7 @@ import { I18nService } from '../../core/services/i18n.service';
  * - 使用 inject() 函數注入依賴而非 constructor
  * - 實作 OnDestroy 清理 IntersectionObserver 避免記憶體洩漏
  * - 使用 isPlatformBrowser 確保 DOM 操作只在瀏覽器執行 (SSR 相容)
+ * - 使用 OnPush Change Detection 提升性能（配合 Signal 使用）
  */
 export interface TocItem {
   level: number;    // 標題層級 (2 = H2, 3 = H3)
@@ -27,6 +28,7 @@ export interface TocItem {
   selector: 'app-table-of-contents',
   standalone: true,
   imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="hidden lg:block sticky top-24 w-64 max-h-[calc(100vh-8rem)] overflow-y-auto">
       <nav class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl p-6">
@@ -179,15 +181,21 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
   /**
    * 從 Markdown 內容中提取標題生成目錄
    * 使用正則表達式匹配 Markdown 標題語法 (## Title, ### Subtitle)
+   *
+   * 重要修正：排除代碼塊內的標題，避免提取示例代碼中的標題
    */
   private extractToc() {
+    // 先移除所有代碼塊（避免匹配到代碼塊內的標題）
+    // 使用正則表達式移除 ```...``` 之間的內容
+    const contentWithoutCodeBlocks = this.content.replace(/```[\s\S]*?```/g, '');
+
     // 正則表達式：匹配 Markdown 標題 (## 或 ### 開頭)
     const headingRegex = /^(#{1,6})\s+(.+)$/gm;
     const tocItems: TocItem[] = [];
     let match;
 
-    // 逐一匹配所有標題
-    while ((match = headingRegex.exec(this.content)) !== null) {
+    // 逐一匹配所有標題（從移除代碼塊後的內容中提取）
+    while ((match = headingRegex.exec(contentWithoutCodeBlocks)) !== null) {
       const level = match[1].length;      // 標題層級 (2 = ##, 3 = ###)
       const title = match[2].trim();       // 標題文字
 

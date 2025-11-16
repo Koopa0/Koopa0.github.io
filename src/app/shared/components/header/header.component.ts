@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
@@ -17,6 +17,7 @@ import { I18nService } from '../../../core/services/i18n.service';
     LanguageToggleComponent,
     SearchDialogComponent
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <header class="sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-dark-bg-primary/80 backdrop-blur-md">
       <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -107,7 +108,7 @@ import { I18nService } from '../../../core/services/i18n.service';
         </div>
 
         <!-- Mobile Menu -->
-        @if (mobileMenuOpen) {
+        @if (mobileMenuOpen()) {
           <div class="md:hidden py-4 space-y-2">
             <a
               routerLink="/"
@@ -155,15 +156,15 @@ import { I18nService } from '../../../core/services/i18n.service';
 })
 export class HeaderComponent {
   i18nService = inject(I18nService);
-  mobileMenuOpen = false;
+  mobileMenuOpen = signal(false);
   searchOpen = signal(false);
 
   toggleMobileMenu(): void {
-    this.mobileMenuOpen = !this.mobileMenuOpen;
+    this.mobileMenuOpen.update(v => !v);
   }
 
   closeMobileMenu(): void {
-    this.mobileMenuOpen = false;
+    this.mobileMenuOpen.set(false);
   }
 
   openSearch(): void {
