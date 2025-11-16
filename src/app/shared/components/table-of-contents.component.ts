@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, OnDestroy, signal, HostListener, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit, OnDestroy, signal, HostListener, inject, PLATFORM_ID, Inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { I18nService } from '../../core/services/i18n.service';
 
 export interface TocItem {
@@ -127,6 +127,7 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
   @Input() content: string = '';
 
   i18nService = inject(I18nService);
+  private platformId = inject(PLATFORM_ID);
   currentLang = this.i18nService.currentLang;
 
   toc = signal<TocItem[]>([]);
@@ -138,7 +139,10 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.extractToc();
-    this.setupIntersectionObserver();
+    // Only run in browser environment
+    if (isPlatformBrowser(this.platformId)) {
+      this.setupIntersectionObserver();
+    }
   }
 
   ngOnDestroy() {
@@ -169,13 +173,17 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
 
     this.toc.set(tocItems);
 
-    // Wait for DOM to render, then add IDs to headings
-    setTimeout(() => {
-      this.addHeadingIds();
-    }, 100);
+    // Wait for DOM to render, then add IDs to headings (only in browser)
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        this.addHeadingIds();
+      }, 100);
+    }
   }
 
   private addHeadingIds() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     // Find all headings in the markdown content
     const contentElement = document.querySelector('.prose');
     if (!contentElement) return;
@@ -214,6 +222,8 @@ export class TableOfContentsComponent implements OnInit, OnDestroy {
   }
 
   scrollToSection(event: Event, id: string) {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     event.preventDefault();
     const element = document.getElementById(id);
     if (element) {
