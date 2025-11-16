@@ -1,5 +1,5 @@
-import { Component, Output, EventEmitter, OnInit, signal, inject, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Output, EventEmitter, OnInit, signal, inject, HostListener, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MarkdownService, PostMetadata } from '../../core/services/markdown.service';
@@ -35,7 +35,6 @@ import { I18nService } from '../../core/services/i18n.service';
               (input)="search()"
               [placeholder]="currentLang() === 'zh-TW' ? '搜尋文章...' : 'Search articles...'"
               class="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-gray-800 border-0 rounded-xl text-gray-900 dark:text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-              autofocus
             />
             @if (query) {
               <button
@@ -193,6 +192,7 @@ export class SearchDialogComponent implements OnInit {
 
   private markdownService = inject(MarkdownService);
   private i18nService = inject(I18nService);
+  private platformId = inject(PLATFORM_ID);
 
   currentLang = this.i18nService.currentLang;
   allPosts = signal<PostMetadata[]>([]);
@@ -209,6 +209,8 @@ export class SearchDialogComponent implements OnInit {
 
   @HostListener('document:keydown.escape')
   onEscapeKey() {
+    // Only run in browser environment
+    if (!isPlatformBrowser(this.platformId)) return;
     this.close();
   }
 
