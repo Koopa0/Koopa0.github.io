@@ -1,6 +1,7 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MarkdownService, PostMetadata } from '../../core/services/markdown.service';
 import { I18nService } from '../../core/services/i18n.service';
 
@@ -14,11 +15,14 @@ import { I18nService } from '../../core/services/i18n.service';
  * - 載入並篩選該標籤的文章
  * - 顯示文章數量統計
  * - 提供返回所有標籤的連結
+ *
+ * 性能優化：使用 OnPush Change Detection 配合 Signal
  */
 @Component({
   selector: 'app-tag-posts',
   standalone: true,
   imports: [CommonModule, RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <!-- Back to all tags -->
@@ -116,6 +120,7 @@ export class TagPostsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private markdownService = inject(MarkdownService);
+  private destroyRef = inject(DestroyRef);
   i18nService = inject(I18nService);
 
   currentLang = this.i18nService.currentLang;
@@ -124,29 +129,42 @@ export class TagPostsComponent implements OnInit {
   loading = signal(true);
 
   ngOnInit() {
-    const tag = this.route.snapshot.paramMap.get('tag');
-    if (!tag) {
-      this.router.navigate(['/tags']);
-      return;
-    }
+    // 訂閱路由參數變化，解決 OnPush 模式下的標籤導航問題
+    this.route.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(params => {
+        const tag = params.get('tag');
+        if (!tag) {
+          this.router.navigate(['/tags']);
+          return;
+        }
 
-    this.tag.set(tag);
+        // 重置狀態
+        this.loading.set(true);
+        this.tag.set(tag);
+        this.posts.set([]);
 
-    // Load all posts and filter by tag
-    this.markdownService.getAllPosts().subscribe({
-      next: (allPosts) => {
-        const filteredPosts = this.markdownService.getPostsByTag(allPosts, tag);
-        // Sort by date (newest first)
-        const sortedPosts = filteredPosts.sort((a, b) =>
-          new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
-        this.posts.set(sortedPosts);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.loading.set(false);
-      }
-    });
+        // 滾動到頁面頂部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Load all posts and filter by tag
+        this.markdownService.getAllPosts()
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: (allPosts) => {
+              const filteredPosts = this.markdownService.getPostsByTag(allPosts, tag);
+              // Sort by date (newest first)
+              const sortedPosts = filteredPosts.sort((a, b) =>
+                new Date(b.date).getTime() - new Date(a.date).getTime()
+              );
+              this.posts.set(sortedPosts);
+              this.loading.set(false);
+            },
+            error: () => {
+              this.loading.set(false);
+            }
+          });
+      });
   }
 
   formatDate(date: string): string {
