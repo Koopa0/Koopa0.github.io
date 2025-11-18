@@ -1,6 +1,7 @@
-import { Component, inject, signal, DestroyRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, DestroyRef, ChangeDetectionStrategy, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
 import { MarkdownService, PostMetadata } from '../../core/services/markdown.service';
@@ -8,7 +9,7 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
 @Component({
   selector: 'app-blog-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="relative">
@@ -17,11 +18,72 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
 
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <!-- Header -->
-        <div class="mb-16 animate-slideUp">
+        <div class="mb-12 animate-slideUp">
           <h1 class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
             {{ t('blog.allPosts') }}
           </h1>
           <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="mb-8 space-y-4 animate-slideUp" style="animation-delay: 0.1s;">
+          <!-- Search Input -->
+          <div class="relative">
+            <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              [(ngModel)]="searchQuery"
+              [placeholder]="t('blog.searchPlaceholder')"
+              class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 transition-all outline-none"
+            />
+          </div>
+
+          <!-- Filters -->
+          <div class="flex flex-col sm:flex-row gap-4">
+            <!-- Category Filter -->
+            <select
+              [(ngModel)]="selectedCategory"
+              class="flex-1 px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 transition-all outline-none"
+            >
+              <option value="">{{ currentLang() === 'zh-TW' ? '所有分類' : 'All Categories' }}</option>
+              @for (category of categories(); track category) {
+                <option [value]="category">{{ t('categories.' + category) }}</option>
+              }
+            </select>
+
+            <!-- Series Filter -->
+            <select
+              [(ngModel)]="selectedSeries"
+              class="flex-1 px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 transition-all outline-none"
+            >
+              <option value="">{{ currentLang() === 'zh-TW' ? '所有系列' : 'All Series' }}</option>
+              @for (series of seriesList(); track series) {
+                <option [value]="series">{{ series }}</option>
+              }
+            </select>
+
+            <!-- Clear Filters Button -->
+            @if (searchQuery() || selectedCategory() || selectedSeries()) {
+              <button
+                (click)="clearFilters()"
+                class="px-6 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors font-medium"
+              >
+                {{ currentLang() === 'zh-TW' ? '清除篩選' : 'Clear Filters' }}
+              </button>
+            }
+          </div>
+
+          <!-- Results Count -->
+          @if (!loading()) {
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+              {{ currentLang() === 'zh-TW'
+                ? '共 ' + filteredPosts().length + ' 篇文章'
+                : filteredPosts().length + ' posts found'
+              }}
+            </div>
+          }
         </div>
 
       @if (loading()) {
@@ -41,7 +103,7 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
             </div>
           }
         </div>
-      } @else if (posts(); as postList) {
+      } @else if (filteredPosts(); as postList) {
         @let lang = currentLang();
         <div class="space-y-6">
           @for (post of postList; track post.slug) {
@@ -186,6 +248,39 @@ export class BlogListComponent {
   posts = signal<PostMetadata[]>([]);
   loading = signal(true);
 
+  // Search and filter signals
+  searchQuery = signal('');
+  selectedCategory = signal('');
+  selectedSeries = signal('');
+  categories = signal<string[]>([]);
+  seriesList = signal<string[]>([]);
+
+  // Filtered posts computed signal
+  filteredPosts = computed(() => {
+    let filtered = this.posts();
+
+    // Filter by search query (title and description)
+    const query = this.searchQuery().trim().toLowerCase();
+    if (query) {
+      filtered = filtered.filter(post =>
+        post.title.toLowerCase().includes(query) ||
+        post.description?.toLowerCase().includes(query)
+      );
+    }
+
+    // Filter by category
+    if (this.selectedCategory()) {
+      filtered = filtered.filter(post => post.category === this.selectedCategory());
+    }
+
+    // Filter by series
+    if (this.selectedSeries()) {
+      filtered = filtered.filter(post => post.series === this.selectedSeries());
+    }
+
+    return filtered;
+  });
+
   constructor() {
     // 使用 constructor 代替 ngOnInit - Angular 20 best practice
     this.markdownService.getAllPosts()
@@ -193,12 +288,34 @@ export class BlogListComponent {
       .subscribe({
         next: (posts) => {
           this.posts.set(posts);
+
+          // Extract unique categories and series
+          const categoriesSet = new Set<string>();
+          const seriesSet = new Set<string>();
+
+          posts.forEach(post => {
+            if (post.category) {
+              categoriesSet.add(post.category);
+            }
+            if (post.series) {
+              seriesSet.add(post.series);
+            }
+          });
+
+          this.categories.set(Array.from(categoriesSet).sort());
+          this.seriesList.set(Array.from(seriesSet).sort());
           this.loading.set(false);
         },
         error: () => {
           this.loading.set(false);
         }
       });
+  }
+
+  clearFilters(): void {
+    this.searchQuery.set('');
+    this.selectedCategory.set('');
+    this.selectedSeries.set('');
   }
 
   formatDate(date: string): string {
