@@ -54,7 +54,7 @@ import { I18nService } from '../../core/services/i18n.service';
         <!-- Tag header -->
         <div class="mb-8">
           <h1 class="text-4xl font-bold mb-4 capitalize">
-            {{ t('tags.' + tag()) }}
+            {{ t('categories.' + tag()) }}
           </h1>
           <p class="text-gray-600 dark:text-gray-400">
             {{ postList.length }} {{ lang === 'zh-TW' ? '篇文章' : 'posts' }}

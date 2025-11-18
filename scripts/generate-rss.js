@@ -24,7 +24,7 @@ function escapeXml(unsafe) {
 
 function generateRSS() {
   // Read posts index
-  const indexPath = path.join(__dirname, '../src/assets/posts/index.json');
+  const indexPath = path.join(__dirname, '../public/assets/posts/index.json');
   const posts = JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
 
   // Sort posts by date (newest first)

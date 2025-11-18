@@ -44,7 +44,7 @@ import { MarkdownService } from '../../core/services/markdown.service';
               class="group p-6 border border-gray-200 dark:border-gray-800 rounded-lg hover:border-blue-500 dark:hover:border-blue-500 transition-all hover:shadow-lg text-center"
             >
               <h3 class="font-medium text-lg group-hover:text-blue-500 transition-colors capitalize">
-                {{ t('tags.' + tagInfo.tag.toLowerCase()) }}
+                {{ t('categories.' + tagInfo.tag.toLowerCase()) }}
               </h3>
               <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
                 {{ tagInfo.count }} {{ lang === 'zh-TW' ? '篇文章' : 'posts' }}
