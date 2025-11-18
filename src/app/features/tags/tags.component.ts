@@ -1,6 +1,7 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
 import { MarkdownService } from '../../core/services/markdown.service';
 
@@ -56,39 +57,42 @@ import { MarkdownService } from '../../core/services/markdown.service';
     </div>
   `
 })
-export class TagsComponent implements OnInit {
+export class TagsComponent {
   i18nService = inject(I18nService);
   private markdownService = inject(MarkdownService);
+  private destroyRef = inject(DestroyRef);
 
   currentLang = this.i18nService.currentLang;
   tagList = signal<{ tag: string; count: number }[]>([]);
   loading = signal(true);
 
-  ngOnInit() {
-    // Load all posts and calculate tag counts
-    this.markdownService.getAllPosts().subscribe({
-      next: (posts) => {
-        const tagCounts = new Map<string, number>();
+  constructor() {
+    // 使用 constructor 代替 ngOnInit - Angular 20 best practice
+    this.markdownService.getAllPosts()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (posts) => {
+          const tagCounts = new Map<string, number>();
 
-        // Count posts for each tag
-        posts.forEach(post => {
-          post.tags.forEach(tag => {
-            tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+          // Count posts for each tag
+          posts.forEach(post => {
+            post.tags.forEach(tag => {
+              tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+            });
           });
-        });
 
-        // Convert to array and sort by tag name
-        const tagArray = Array.from(tagCounts.entries())
-          .map(([tag, count]) => ({ tag, count }))
-          .sort((a, b) => a.tag.localeCompare(b.tag));
+          // Convert to array and sort by tag name
+          const tagArray = Array.from(tagCounts.entries())
+            .map(([tag, count]) => ({ tag, count }))
+            .sort((a, b) => a.tag.localeCompare(b.tag));
 
-        this.tagList.set(tagArray);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.loading.set(false);
-      }
-    });
+          this.tagList.set(tagArray);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.loading.set(false);
+        }
+      });
   }
 
   t(key: string): string {
