@@ -1,6 +1,7 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
 import { MarkdownService } from '../../core/services/markdown.service';
 
@@ -123,38 +124,42 @@ import { MarkdownService } from '../../core/services/markdown.service';
     </div>
   `
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   i18nService = inject(I18nService);
   private markdownService = inject(MarkdownService);
+  private destroyRef = inject(DestroyRef);
 
   currentLang = this.i18nService.currentLang;
   techTags = signal<{ category: string; count: number }[]>([]);
   loading = signal(true);
 
-  ngOnInit() {
-    // Load all posts and extract categories with counts
-    this.markdownService.getAllPosts().subscribe({
-      next: (posts) => {
-        // Count posts per category
-        const categoryMap = new Map<string, number>();
-        posts.forEach(post => {
-          if (post.category) {
-            categoryMap.set(post.category, (categoryMap.get(post.category) || 0) + 1);
-          }
-        });
+  constructor() {
+    // 使用 constructor 代替 ngOnInit - Angular 20 best practice
+    // 確保每次路由到此組件時都會重新載入數據
+    this.markdownService.getAllPosts()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (posts) => {
+          // Count posts per category
+          const categoryMap = new Map<string, number>();
+          posts.forEach(post => {
+            if (post.category) {
+              categoryMap.set(post.category, (categoryMap.get(post.category) || 0) + 1);
+            }
+          });
 
-        // Convert to array and sort by category name
-        const categories = Array.from(categoryMap.entries())
-          .map(([category, count]) => ({ category, count }))
-          .sort((a, b) => a.category.localeCompare(b.category));
+          // Convert to array and sort by category name
+          const categories = Array.from(categoryMap.entries())
+            .map(([category, count]) => ({ category, count }))
+            .sort((a, b) => a.category.localeCompare(b.category));
 
-        this.techTags.set(categories);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.loading.set(false);
-      }
-    });
+          this.techTags.set(categories);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.loading.set(false);
+        }
+      });
   }
 
   t(key: string): string {
