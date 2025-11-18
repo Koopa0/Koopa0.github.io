@@ -1,8 +1,6 @@
 ---
 title: "如何在 Golang 中實現 LRU Cache"
 date: "2024-02-01"
-category: "tutorial"
-tags: ["Golang", "Algorithm", "Cache", "Data Structure"]
 description: "從零開始實現一個線程安全的 LRU Cache，並分析時間複雜度"
 ---
 

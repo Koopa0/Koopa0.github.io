@@ -3,7 +3,8 @@
     "home": "首頁",
     "blog": "文章",
     "tags": "標籤",
-    "about": "關於"
+    "about": "關於",
+    "series": "系列"
   },
   "theme": {
     "dark": "深色模式",
@@ -45,6 +46,19 @@
     "flutter": "Flutter",
     "allTags": "所有標籤",
     "postsTagged": "標籤為 {{tag}} 的文章"
+  },
+  "categories": {
+    "ai": "人工智慧",
+    "algorithm": "演算法",
+    "angular": "Angular",
+    "daily": "日常分享",
+    "devops": "DevOps",
+    "flutter": "Flutter",
+    "golang": "Golang",
+    "google": "Google",
+    "rust": "Rust",
+    "sql": "SQL",
+    "system": "系統架構"
   },
   "footer": {
     "copyright": "© {{year}} Koopa. 保留所有權利。",

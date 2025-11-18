@@ -3,7 +3,8 @@
     "home": "Home",
     "blog": "Blog",
     "tags": "Tags",
-    "about": "About"
+    "about": "About",
+    "series": "Series"
   },
   "theme": {
     "dark": "Dark Mode",
@@ -45,6 +46,19 @@
     "flutter": "Flutter",
     "allTags": "All Tags",
     "postsTagged": "Posts tagged with {{tag}}"
+  },
+  "categories": {
+    "ai": "Artificial Intelligence",
+    "algorithm": "Algorithm",
+    "angular": "Angular",
+    "daily": "Daily",
+    "devops": "DevOps",
+    "flutter": "Flutter",
+    "golang": "Golang",
+    "google": "Google",
+    "rust": "Rust",
+    "sql": "SQL",
+    "system": "System Architecture"
   },
   "footer": {
     "copyright": "© {{year}} Koopa. All rights reserved.",

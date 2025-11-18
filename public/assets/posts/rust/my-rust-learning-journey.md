@@ -1,8 +1,6 @@
 ---
 title: "最近學習 Rust 的心得與感想"
 date: "2024-03-10"
-category: "daily"
-tags: ["Rust", "Learning"]
 description: "分享最近從 Golang 轉 Rust 的一些體會和心路歷程"
 ---
 

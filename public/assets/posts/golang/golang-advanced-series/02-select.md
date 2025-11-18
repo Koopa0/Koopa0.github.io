@@ -1,10 +1,6 @@
 ---
 title: "Golang 進階系列 (2) - Select 語句與並發控制"
 date: "2024-01-22"
-series: "golang-advanced"
-seriesOrder: 2
-category: "tutorial-series"
-tags: ["Golang", "Concurrency", "Select"]
 description: "深入理解 select 語句的工作原理和並發控制模式"
 ---
 
