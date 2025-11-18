@@ -1,5 +1,109 @@
 [
   {
+    "category": "daily",
+    "series": null,
+    "slug": "daily/my-coding-setup-2024",
+    "title": "我的 2024 年開發環境設定",
+    "date": "2024-03-18",
+    "description": "分享我目前使用的開發工具、VS Code 設定和工作流程",
+    "tags": [
+      "daily"
+    ],
+    "readingTime": 1,
+    "filePath": "daily/my-coding-setup-2024"
+  },
+  {
+    "category": "system",
+    "series": null,
+    "slug": "system/microservices-architecture",
+    "title": "微服務架構設計原則與實踐",
+    "date": "2024-02-28",
+    "description": "探討微服務架構的設計原則、服務拆分策略和常見挑戰",
+    "tags": [
+      "system"
+    ],
+    "readingTime": 1,
+    "filePath": "system/microservices-architecture"
+  },
+  {
+    "category": "sql",
+    "series": null,
+    "slug": "sql/sql-performance-tuning",
+    "title": "SQL 查詢效能優化實戰",
+    "date": "2024-03-01",
+    "description": "深入探討 SQL 查詢優化技巧，包括索引設計、執行計畫分析等",
+    "tags": [
+      "sql"
+    ],
+    "readingTime": 1,
+    "filePath": "sql/sql-performance-tuning"
+  },
+  {
+    "category": "google",
+    "series": null,
+    "slug": "google/google-cloud-serverless",
+    "title": "Google Cloud 無伺服器架構實戰",
+    "date": "2024-03-05",
+    "description": "探討如何使用 Cloud Functions 和 Cloud Run 建立可擴展的無伺服器應用",
+    "tags": [
+      "google"
+    ],
+    "readingTime": 1,
+    "filePath": "google/google-cloud-serverless"
+  },
+  {
+    "category": "devops",
+    "series": null,
+    "slug": "devops/docker-best-practices",
+    "title": "Docker 最佳實踐與優化技巧",
+    "date": "2024-03-08",
+    "description": "分享 Docker 容器化開發的最佳實踐，包括映像優化、多階段構建等",
+    "tags": [
+      "devops"
+    ],
+    "readingTime": 1,
+    "filePath": "devops/docker-best-practices"
+  },
+  {
+    "category": "flutter",
+    "series": null,
+    "slug": "flutter/flutter-state-management",
+    "title": "Flutter 狀態管理最佳實踐",
+    "date": "2024-03-12",
+    "description": "比較 Flutter 中常見的狀態管理方案：Provider、Riverpod、Bloc 等",
+    "tags": [
+      "flutter"
+    ],
+    "readingTime": 1,
+    "filePath": "flutter/flutter-state-management"
+  },
+  {
+    "category": "angular",
+    "series": null,
+    "slug": "angular/angular-signals-guide",
+    "title": "Angular Signals 完整指南",
+    "date": "2024-03-20",
+    "description": "深入探討 Angular 的新響應式原語 Signals，以及如何在應用中使用它",
+    "tags": [
+      "angular"
+    ],
+    "readingTime": 1,
+    "filePath": "angular/angular-signals-guide"
+  },
+  {
+    "category": "ai",
+    "series": null,
+    "slug": "ai/getting-started-with-ai",
+    "title": "AI 入門：機器學習基礎概念",
+    "date": "2024-03-15",
+    "description": "介紹機器學習的基礎概念，包括監督式學習、非監督式學習和強化學習",
+    "tags": [
+      "ai"
+    ],
+    "readingTime": 1,
+    "filePath": "ai/getting-started-with-ai"
+  },
+  {
     "category": "rust",
     "series": null,
     "slug": "rust/my-rust-learning-journey",
