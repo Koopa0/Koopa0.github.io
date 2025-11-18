@@ -46,6 +46,13 @@
     "allTags": "All Tags",
     "postsTagged": "Posts tagged with {{tag}}"
   },
+  "categories": {
+    "Golang": "Golang",
+    "Rust": "Rust",
+    "Algorithm": "Algorithm",
+    "DevOps": "DevOps",
+    "Daily": "Daily"
+  },
   "footer": {
     "copyright": "© {{year}} Koopa. All rights reserved.",
     "builtWith": "Built with Angular {{version}}"

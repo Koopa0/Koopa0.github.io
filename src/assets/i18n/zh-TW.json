@@ -46,6 +46,13 @@
     "allTags": "所有標籤",
     "postsTagged": "標籤為 {{tag}} 的文章"
   },
+  "categories": {
+    "Golang": "Golang",
+    "Rust": "Rust",
+    "Algorithm": "演算法",
+    "DevOps": "DevOps",
+    "Daily": "日常分享"
+  },
   "footer": {
     "copyright": "© {{year}} Koopa. 保留所有權利。",
     "builtWith": "使用 Angular {{version}} 建立"

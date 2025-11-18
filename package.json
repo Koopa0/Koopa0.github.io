@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run generate:seo && ng build",
-    "build:prod": "npm run generate:seo && ng build --configuration production",
+    "build": "npm run generate:posts && npm run generate:seo && ng build",
+    "build:prod": "npm run generate:posts && npm run generate:seo && ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "generate:posts": "node scripts/generate-posts-index.js",
     "generate:rss": "node scripts/generate-rss.js",
     "generate:sitemap": "node scripts/generate-sitemap.js",
     "generate:seo": "npm run generate:rss && npm run generate:sitemap",

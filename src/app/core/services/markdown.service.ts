@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, catchError, of } from 'rxjs';
+import { Observable, map, catchError, of, switchMap } from 'rxjs';
 import matter from 'gray-matter';
 
 export interface PostMetadata {
@@ -8,12 +8,13 @@ export interface PostMetadata {
   date: string;
   tags: string[];
   description?: string;
-  slug: string;
+  slug: string;           // Clean URL slug for routing
+  filePath?: string;      // Actual file path for loading markdown
   readingTime?: number;   // Reading time in minutes
-  // Phase 1-3: Content classification
-  category?: string;      // tutorial-series | tutorial | daily | note | project
-  series?: string;        // Series identifier (e.g., 'golang-advanced')
-  seriesOrder?: number;   // Order in series (1, 2, 3, ...)
+  // Content classification (auto-detected from folder structure)
+  category?: string;      // First-level folder (e.g., 'golang', 'rust', 'algorithm')
+  series?: string;        // Series identifier from second-level folder
+  seriesOrder?: number;   // Order in series (extracted from filename prefix)
 }
 
 export interface Post extends PostMetadata {
@@ -53,6 +54,7 @@ export class MarkdownService {
 
   /**
    * Load a single post by slug
+   * First loads the index to get the filePath, then loads the markdown file
    */
   getPost(slug: string): Observable<Post | null> {
     // Check cache first
@@ -60,11 +62,28 @@ export class MarkdownService {
       return of(this.postsCache.get(slug)!);
     }
 
-    return this.http.get(`/assets/posts/${slug}.md`, { responseType: 'text' }).pipe(
-      map(markdown => this.parseMarkdown(markdown, slug)),
-      catchError(error => {
-        console.error(`Failed to load post: ${slug}`, error);
-        return of(null);
+    // Load index to find the filePath for this slug
+    return this.getAllPosts().pipe(
+      map(posts => {
+        const postMeta = posts.find(p => p.slug === slug);
+        if (!postMeta) {
+          console.error(`Post not found in index: ${slug}`);
+          return null;
+        }
+        // Use filePath if available, otherwise fall back to slug
+        return postMeta.filePath || slug;
+      }),
+      switchMap(filePath => {
+        if (!filePath) {
+          return of(null);
+        }
+        return this.http.get(`/assets/posts/${filePath}.md`, { responseType: 'text' }).pipe(
+          map(markdown => this.parseMarkdown(markdown, slug)),
+          catchError(error => {
+            console.error(`Failed to load post file: ${filePath}`, error);
+            return of(null);
+          })
+        );
       })
     );
   }
