@@ -1,4 +1,4 @@
-import { Component, inject, signal, DestroyRef, ChangeDetectionStrategy, computed } from '@angular/core';
+import { Component, inject, signal, DestroyRef, ChangeDetectionStrategy, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -59,7 +59,7 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
               class="flex-1 px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 transition-all outline-none"
             >
               <option value="">{{ currentLang() === 'zh-TW' ? '所有系列' : 'All Series' }}</option>
-              @for (series of seriesList(); track series) {
+              @for (series of availableSeries(); track series) {
                 <option [value]="series">{{ series }}</option>
               }
             </select>
@@ -120,47 +120,27 @@ import { MarkdownService, PostMetadata } from '../../core/services/markdown.serv
                   <!-- Category Badge -->
                   @if (post.category) {
                     <div class="mb-3 flex items-center gap-2">
-                      @if (post.category === 'tutorial-series') {
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 text-xs font-semibold border border-purple-200 dark:border-purple-800">
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                          </svg>
-                          {{ lang === 'zh-TW' ? '系列教學' : 'Tutorial Series' }}
-                          @if (post.seriesOrder) {
-                            <span class="ml-1 px-1.5 py-0.5 rounded bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200 text-xs font-bold">
-                              #{{ post.seriesOrder }}
-                            </span>
-                          }
-                        </span>
-                      } @else if (post.category === 'tutorial') {
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-semibold border border-blue-200 dark:border-blue-800">
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                          </svg>
-                          {{ lang === 'zh-TW' ? '教學' : 'Tutorial' }}
-                        </span>
-                      } @else if (post.category === 'daily') {
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-semibold border border-amber-200 dark:border-amber-800">
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                          </svg>
-                          {{ lang === 'zh-TW' ? '日常分享' : 'Daily' }}
-                        </span>
-                      } @else if (post.category === 'note') {
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold border border-green-200 dark:border-green-800">
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                          </svg>
-                          {{ lang === 'zh-TW' ? '筆記' : 'Note' }}
-                        </span>
-                      } @else if (post.category === 'project') {
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 text-xs font-semibold border border-rose-200 dark:border-rose-800">
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                          </svg>
-                          {{ lang === 'zh-TW' ? '專案' : 'Project' }}
-                        </span>
-                      }
+                      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border capitalize"
+                        [ngClass]="{
+                          'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 border-purple-200 dark:border-purple-800': post.category === 'ai',
+                          'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800': post.category === 'algorithm',
+                          'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800': post.category === 'angular',
+                          'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800': post.category === 'daily',
+                          'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800': post.category === 'devops',
+                          'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400 border-sky-200 dark:border-sky-800': post.category === 'flutter',
+                          'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 border-cyan-200 dark:border-cyan-800': post.category === 'golang',
+                          'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800': post.category === 'google',
+                          'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-800': post.category === 'rust',
+                          'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 border-teal-200 dark:border-teal-800': post.category === 'sql',
+                          'bg-slate-100 dark:bg-slate-900/30 text-slate-700 dark:text-slate-400 border-slate-200 dark:border-slate-800': post.category === 'system'
+                        }">
+                        {{ t('categories.' + post.category) }}
+                        @if (post.series && post.seriesOrder) {
+                          <span class="ml-1 px-1.5 py-0.5 rounded bg-black/10 dark:bg-white/10 text-xs font-bold">
+                            #{{ post.seriesOrder }}
+                          </span>
+                        }
+                      </span>
                     </div>
                   }
 
@@ -255,6 +235,25 @@ export class BlogListComponent {
   categories = signal<string[]>([]);
   seriesList = signal<string[]>([]);
 
+  // Available series based on selected category
+  availableSeries = computed(() => {
+    const category = this.selectedCategory();
+    if (!category) {
+      // If no category selected, show all series
+      return this.seriesList();
+    }
+
+    // Filter series that belong to the selected category
+    const seriesInCategory = new Set<string>();
+    this.posts().forEach(post => {
+      if (post.category === category && post.series) {
+        seriesInCategory.add(post.series);
+      }
+    });
+
+    return Array.from(seriesInCategory).sort();
+  });
+
   // Filtered posts computed signal
   filteredPosts = computed(() => {
     let filtered = this.posts();
@@ -310,6 +309,20 @@ export class BlogListComponent {
           this.loading.set(false);
         }
       });
+
+    // Auto-clear series selection when category changes
+    effect(() => {
+      const category = this.selectedCategory();
+      const series = this.selectedSeries();
+
+      // If category changed and current series doesn't belong to new category
+      if (category && series) {
+        const availableSeries = this.availableSeries();
+        if (!availableSeries.includes(series)) {
+          this.selectedSeries.set('');
+        }
+      }
+    });
   }
 
   clearFilters(): void {
