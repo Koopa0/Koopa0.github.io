@@ -13,30 +13,17 @@
     "filePath": "daily/my-coding-setup-2024"
   },
   {
-    "category": "system",
+    "category": "devops",
     "series": null,
-    "slug": "system/microservices-architecture",
-    "title": "微服務架構設計原則與實踐",
-    "date": "2024-02-28",
-    "description": "探討微服務架構的設計原則、服務拆分策略和常見挑戰",
+    "slug": "devops/docker-best-practices",
+    "title": "Docker 最佳實踐與優化技巧",
+    "date": "2024-03-08",
+    "description": "分享 Docker 容器化開發的最佳實踐，包括映像優化、多階段構建等",
     "tags": [
-      "system"
+      "devops"
     ],
     "readingTime": 1,
-    "filePath": "system/microservices-architecture"
-  },
-  {
-    "category": "sql",
-    "series": null,
-    "slug": "sql/sql-performance-tuning",
-    "title": "SQL 查詢效能優化實戰",
-    "date": "2024-03-01",
-    "description": "深入探討 SQL 查詢優化技巧，包括索引設計、執行計畫分析等",
-    "tags": [
-      "sql"
-    ],
-    "readingTime": 1,
-    "filePath": "sql/sql-performance-tuning"
+    "filePath": "devops/docker-best-practices"
   },
   {
     "category": "google",
@@ -52,30 +39,43 @@
     "filePath": "google/google-cloud-serverless"
   },
   {
-    "category": "devops",
+    "category": "sql",
     "series": null,
-    "slug": "devops/docker-best-practices",
-    "title": "Docker 最佳實踐與優化技巧",
-    "date": "2024-03-08",
-    "description": "分享 Docker 容器化開發的最佳實踐，包括映像優化、多階段構建等",
+    "slug": "sql/sql-performance-tuning",
+    "title": "SQL 查詢效能優化實戰",
+    "date": "2024-03-01",
+    "description": "深入探討 SQL 查詢優化技巧，包括索引設計、執行計畫分析等",
     "tags": [
-      "devops"
+      "sql"
     ],
     "readingTime": 1,
-    "filePath": "devops/docker-best-practices"
+    "filePath": "sql/sql-performance-tuning"
   },
   {
-    "category": "flutter",
+    "category": "system",
     "series": null,
-    "slug": "flutter/flutter-state-management",
-    "title": "Flutter 狀態管理最佳實踐",
-    "date": "2024-03-12",
-    "description": "比較 Flutter 中常見的狀態管理方案：Provider、Riverpod、Bloc 等",
+    "slug": "system/microservices-architecture",
+    "title": "微服務架構設計原則與實踐",
+    "date": "2024-02-28",
+    "description": "探討微服務架構的設計原則、服務拆分策略和常見挑戰",
     "tags": [
-      "flutter"
+      "system"
     ],
     "readingTime": 1,
-    "filePath": "flutter/flutter-state-management"
+    "filePath": "system/microservices-architecture"
+  },
+  {
+    "category": "ai",
+    "series": null,
+    "slug": "ai/getting-started-with-ai",
+    "title": "AI 入門：機器學習基礎概念",
+    "date": "2024-03-15",
+    "description": "介紹機器學習的基礎概念，包括監督式學習、非監督式學習和強化學習",
+    "tags": [
+      "ai"
+    ],
+    "readingTime": 1,
+    "filePath": "ai/getting-started-with-ai"
   },
   {
     "category": "angular",
@@ -91,17 +91,17 @@
     "filePath": "angular/angular-signals-guide"
   },
   {
-    "category": "ai",
+    "category": "flutter",
     "series": null,
-    "slug": "ai/getting-started-with-ai",
-    "title": "AI 入門：機器學習基礎概念",
-    "date": "2024-03-15",
-    "description": "介紹機器學習的基礎概念，包括監督式學習、非監督式學習和強化學習",
+    "slug": "flutter/flutter-state-management",
+    "title": "Flutter 狀態管理最佳實踐",
+    "date": "2024-03-12",
+    "description": "比較 Flutter 中常見的狀態管理方案：Provider、Riverpod、Bloc 等",
     "tags": [
-      "ai"
+      "flutter"
     ],
     "readingTime": 1,
-    "filePath": "ai/getting-started-with-ai"
+    "filePath": "flutter/flutter-state-management"
   },
   {
     "category": "rust",
