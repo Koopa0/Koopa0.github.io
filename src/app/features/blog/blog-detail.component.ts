@@ -9,6 +9,7 @@ import { SeoService } from '../../core/services/seo.service';
 import { ReadingProgressComponent } from '../../shared/components/reading-progress.component';
 import { CodeBlockCopyButtonComponent } from '../../shared/components/code-block-copy-button.component';
 import { TableOfContentsComponent } from '../../shared/components/table-of-contents.component';
+import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/components/breadcrumb.component';
 import { forkJoin } from 'rxjs';
 
 /**
@@ -30,7 +31,7 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-blog-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, MarkdownModule, ReadingProgressComponent, CodeBlockCopyButtonComponent, TableOfContentsComponent],
+  imports: [CommonModule, RouterLink, MarkdownModule, ReadingProgressComponent, CodeBlockCopyButtonComponent, TableOfContentsComponent, BreadcrumbComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <!-- Reading Progress Bar -->
@@ -70,7 +71,7 @@ import { forkJoin } from 'rxjs';
       } @else if (post()) {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <!-- Back button -->
-          <div class="mb-8 max-w-3xl mx-auto lg:mx-0">
+          <div class="mb-4 max-w-3xl mx-auto lg:mx-0">
             <a
               routerLink="/blog"
               class="group inline-flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300"
@@ -81,6 +82,13 @@ import { forkJoin } from 'rxjs';
               {{ t('blog.allPosts') }}
             </a>
           </div>
+
+          <!-- Breadcrumb -->
+          @if (breadcrumbItems().length > 0) {
+            <div class="mb-8 max-w-3xl mx-auto lg:mx-0">
+              <app-breadcrumb [items]="breadcrumbItems()" />
+            </div>
+          }
 
           <!-- Two Column Layout: TOC on left, Article on right -->
           <div class="flex gap-12 lg:gap-16">
@@ -342,6 +350,7 @@ export class BlogDetailComponent implements OnInit {
   seriesInfo = signal<SeriesInfo | null>(null);
   seriesNav: { previous: PostMetadata | null; next: PostMetadata | null } = { previous: null, next: null };
   relatedPosts = signal<PostMetadata[]>([]);
+  breadcrumbItems = signal<BreadcrumbItem[]>([]);
 
   ngOnInit() {
     // 訂閱路由參數變化，解決 OnPush 模式下的導航問題
@@ -360,6 +369,7 @@ export class BlogDetailComponent implements OnInit {
         this.seriesInfo.set(null);
         this.seriesNav = { previous: null, next: null };
         this.relatedPosts.set([]);
+        this.breadcrumbItems.set([]);
 
         // 滾動到頁面頂部
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -378,12 +388,33 @@ export class BlogDetailComponent implements OnInit {
                 // 設置 SEO Meta Tags 和 Schema.org
                 this.seoService.setArticle(post);
 
-                // 設置麵包屑 Schema
+                // 設置麵包屑 Schema 和組件顯示
                 this.seoService.setBreadcrumbSchema([
                   { name: '首頁', url: '/' },
                   { name: '部落格', url: '/blog' },
                   { name: post.title, url: `/blog/${post.slug}` }
                 ]);
+
+                // 設置麵包屑組件
+                const breadcrumbs: BreadcrumbItem[] = [
+                  { label: '首頁', url: '/', translateKey: 'nav.home' }
+                ];
+
+                // 如果有分類，加入分類階層
+                if (post.category) {
+                  breadcrumbs.push({
+                    label: post.category,
+                    url: `/tags/${post.category}`,
+                    translateKey: `categories.${post.category}`
+                  });
+                }
+
+                // 加入文章標題（不可點擊）
+                breadcrumbs.push({
+                  label: post.title
+                });
+
+                this.breadcrumbItems.set(breadcrumbs);
 
                 // If post is part of a series, load series info and navigation
                 if (post.series) {

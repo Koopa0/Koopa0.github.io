@@ -1,7 +1,8 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { I18nService } from '../../core/services/i18n.service';
+import { MarkdownService } from '../../core/services/markdown.service';
 
 @Component({
   selector: 'app-home',
@@ -53,31 +54,44 @@ import { I18nService } from '../../core/services/i18n.service';
             </p>
           </div>
 
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            @for (tag of techTags; track tag.name; let i = $index) {
-              <a
-                [routerLink]="['/tags', tag.name.toLowerCase()]"
-                class="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm hover:border-blue-500 dark:hover:border-blue-400 p-6 text-center transition-all duration-300 hover:shadow-card-hover dark:hover:shadow-card-dark-hover hover:-translate-y-1 animate-slideUp"
-                [style.animation-delay]="(i * 0.05) + 's'"
-              >
-                <!-- Hover gradient overlay -->
-                <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                <!-- Content -->
-                <div class="relative z-10">
-                  <h3 class="font-semibold text-lg mb-2 text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                    {{ tag.name }}
-                  </h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                    {{ currentLang() === 'zh-TW' ? tag.zhDesc : tag.enDesc }}
-                  </p>
+          @if (loading()) {
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              @for (i of [1,2,3,4,5,6,7,8]; track i) {
+                <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 p-6 animate-pulse">
+                  <div class="h-6 bg-gray-200 dark:bg-gray-800 rounded w-3/4 mb-2 animate-shimmer"></div>
+                  <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-1/2 animate-shimmer"></div>
                 </div>
+              }
+            </div>
+          } @else {
+            @let lang = currentLang();
+            @let categories = techTags();
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              @for (tag of categories; track tag.category; let i = $index) {
+                <a
+                  [routerLink]="['/tags', tag.category]"
+                  class="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm hover:border-blue-500 dark:hover:border-blue-400 p-6 text-center transition-all duration-300 hover:shadow-card-hover dark:hover:shadow-card-dark-hover hover:-translate-y-1 animate-slideUp"
+                  [style.animation-delay]="(i * 0.05) + 's'"
+                >
+                  <!-- Hover gradient overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                <!-- Animated corner accent -->
-                <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-blue-500/20 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </a>
-            }
-          </div>
+                  <!-- Content -->
+                  <div class="relative z-10">
+                    <h3 class="font-semibold text-lg mb-2 text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 capitalize">
+                      {{ t('categories.' + tag.category) }}
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                      {{ tag.count }} {{ lang === 'zh-TW' ? '篇文章' : 'posts' }}
+                    </p>
+                  </div>
+
+                  <!-- Animated corner accent -->
+                  <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-blue-500/20 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </a>
+              }
+            </div>
+          }
         </section>
 
         <!-- About Section -->
@@ -111,22 +125,36 @@ import { I18nService } from '../../core/services/i18n.service';
 })
 export class HomeComponent implements OnInit {
   i18nService = inject(I18nService);
-  currentLang = this.i18nService.currentLang;
+  private markdownService = inject(MarkdownService);
 
-  techTags = [
-    { name: 'Golang', zhDesc: 'Go 程式設計', enDesc: 'Go Programming' },
-    { name: 'Rust', zhDesc: '系統程式語言', enDesc: 'Systems Language' },
-    { name: 'Algorithm', zhDesc: '演算法與資料結構', enDesc: 'Algorithms & DS' },
-    { name: 'System', zhDesc: '系統架構設計', enDesc: 'System Design' },
-    { name: 'SQL', zhDesc: '資料庫查詢', enDesc: 'Database Queries' },
-    { name: 'AI', zhDesc: '人工智慧', enDesc: 'Artificial Intelligence' },
-    { name: 'Google', zhDesc: 'Google 技術', enDesc: 'Google Tech' },
-    { name: 'Angular', zhDesc: 'Angular 框架', enDesc: 'Angular Framework' },
-    { name: 'Flutter', zhDesc: 'Flutter 開發', enDesc: 'Flutter Development' }
-  ];
+  currentLang = this.i18nService.currentLang;
+  techTags = signal<{ category: string; count: number }[]>([]);
+  loading = signal(true);
 
   ngOnInit() {
-    // Future: Load recent posts
+    // Load all posts and extract categories with counts
+    this.markdownService.getAllPosts().subscribe({
+      next: (posts) => {
+        // Count posts per category
+        const categoryMap = new Map<string, number>();
+        posts.forEach(post => {
+          if (post.category) {
+            categoryMap.set(post.category, (categoryMap.get(post.category) || 0) + 1);
+          }
+        });
+
+        // Convert to array and sort by category name
+        const categories = Array.from(categoryMap.entries())
+          .map(([category, count]) => ({ category, count }))
+          .sort((a, b) => a.category.localeCompare(b.category));
+
+        this.techTags.set(categories);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.loading.set(false);
+      }
+    });
   }
 
   t(key: string): string {

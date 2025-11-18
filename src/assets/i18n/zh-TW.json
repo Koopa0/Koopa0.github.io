@@ -3,7 +3,8 @@
     "home": "首頁",
     "blog": "文章",
     "tags": "標籤",
-    "about": "關於"
+    "about": "關於",
+    "series": "系列"
   },
   "theme": {
     "dark": "深色模式",

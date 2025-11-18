@@ -3,7 +3,8 @@
     "home": "Home",
     "blog": "Blog",
     "tags": "Tags",
-    "about": "About"
+    "about": "About",
+    "series": "Series"
   },
   "theme": {
     "dark": "Dark Mode",
