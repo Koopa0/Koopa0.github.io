@@ -32,6 +32,10 @@ export class I18nService {
       this.loadLanguage();
     }
 
+    // Preload initial language translations
+    const initialLang = this.currentLang();
+    this.loadTranslations(initialLang).subscribe();
+
     // Load translations when language changes
     effect(() => {
       const lang = this.currentLang();
@@ -41,12 +45,16 @@ export class I18nService {
 
   /**
    * Switch to specific language
+   * Preloads translations before switching to ensure smooth transition
    */
   setLanguage(lang: Language): void {
-    this.currentLang.set(lang);
-    if (this.isBrowser) {
-      localStorage.setItem('language', lang);
-    }
+    // Preload translations before switching language
+    this.loadTranslations(lang).subscribe(() => {
+      this.currentLang.set(lang);
+      if (this.isBrowser) {
+        localStorage.setItem('language', lang);
+      }
+    });
   }
 
   /**
