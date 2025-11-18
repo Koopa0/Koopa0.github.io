@@ -47,11 +47,17 @@
     "postsTagged": "標籤為 {{tag}} 的文章"
   },
   "categories": {
-    "Golang": "Golang",
-    "Rust": "Rust",
-    "Algorithm": "演算法",
-    "DevOps": "DevOps",
-    "Daily": "日常分享"
+    "ai": "人工智慧",
+    "algorithm": "演算法",
+    "angular": "Angular",
+    "daily": "日常分享",
+    "devops": "DevOps",
+    "flutter": "Flutter",
+    "golang": "Golang",
+    "google": "Google",
+    "rust": "Rust",
+    "sql": "SQL",
+    "system": "系統架構"
   },
   "footer": {
     "copyright": "© {{year}} Koopa. 保留所有權利。",

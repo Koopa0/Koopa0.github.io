@@ -47,11 +47,17 @@
     "postsTagged": "Posts tagged with {{tag}}"
   },
   "categories": {
-    "Golang": "Golang",
-    "Rust": "Rust",
-    "Algorithm": "Algorithm",
-    "DevOps": "DevOps",
-    "Daily": "Daily"
+    "ai": "Artificial Intelligence",
+    "algorithm": "Algorithm",
+    "angular": "Angular",
+    "daily": "Daily",
+    "devops": "DevOps",
+    "flutter": "Flutter",
+    "golang": "Golang",
+    "google": "Google",
+    "rust": "Rust",
+    "sql": "SQL",
+    "system": "System Architecture"
   },
   "footer": {
     "copyright": "© {{year}} Koopa. All rights reserved.",
