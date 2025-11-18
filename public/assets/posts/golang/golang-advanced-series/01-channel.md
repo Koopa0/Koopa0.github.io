@@ -1,7 +1,6 @@
 ---
 title: "Golang 進階系列 (1) - Channel 深入解析"
 date: "2024-01-15"
-tags: ["Concurrency", "Channel"]
 description: "深入探討 Golang Channel 的實現原理、使用場景和最佳實踐"
 ---
 

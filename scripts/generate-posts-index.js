@@ -114,8 +114,8 @@ function processMarkdownFile(file) {
       date: frontmatter.date || fileModifiedTime.toISOString().split('T')[0],
       description: frontmatter.description || '',
 
-      // 標籤：優先使用 frontmatter，否則用 category
-      tags: frontmatter.tags || (pathMetadata.category ? [pathMetadata.category] : []),
+      // 標籤：自動從第一層資料夾推導（category 即為 tag）
+      tags: pathMetadata.category ? [pathMetadata.category] : [],
 
       // 計算閱讀時間
       readingTime: frontmatter.readingTime || calculateReadingTime(content),

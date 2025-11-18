@@ -148,20 +148,45 @@ export class MarkdownService {
   }
 
   /**
-   * Get related posts based on tags
+   * Get related posts with priority scoring:
+   * 1. Same series posts (highest priority - 100 points)
+   * 2. Same category posts (medium priority - 10 points)
+   * 3. Same tags (base priority - 1 point each)
    */
   getRelatedPosts(currentPost: PostMetadata, allPosts: PostMetadata[], limit: number = 3): PostMetadata[] {
     const scoredPosts = allPosts
       .filter(post => post.slug !== currentPost.slug)
       .map(post => {
+        let score = 0;
+
+        // Highest priority: Same series posts
+        if (currentPost.series && post.series === currentPost.series) {
+          score += 100;
+        }
+
+        // Medium priority: Same category
+        if (currentPost.category && post.category === currentPost.category) {
+          score += 10;
+        }
+
+        // Base priority: Common tags (now tags = category, so this adds extra weight)
         const commonTags = post.tags.filter(tag => currentPost.tags.includes(tag));
+        score += commonTags.length;
+
         return {
           post,
-          score: commonTags.length
+          score
         };
       })
       .filter(item => item.score > 0)
-      .sort((a, b) => b.score - a.score)
+      .sort((a, b) => {
+        // First sort by score
+        if (b.score !== a.score) {
+          return b.score - a.score;
+        }
+        // If same score, prefer more recent posts
+        return new Date(b.post.date).getTime() - new Date(a.post.date).getTime();
+      })
       .slice(0, limit);
 
     return scoredPosts.map(item => item.post);
