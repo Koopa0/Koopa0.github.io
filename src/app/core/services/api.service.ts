@@ -1,15 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 export interface ApiRequestOptions {
   params?: HttpParams | { [param: string]: string | string[] };
-  headers?: HttpHeaders | { [header: string]: string | string[] };
-  observe?: 'body' | 'response';
-  reportProgress?: boolean;
-  responseType?: 'json' | 'text' | 'blob' | 'arraybuffer';
+  headers?: { [header: string]: string | string[] };
 }
 
 @Injectable({
@@ -30,7 +27,7 @@ export class ApiService {
       console.log(`[API GET] ${url}`, { useMock: this.useMock, options });
     }
 
-    return this.http.get<T>(url, options as any).pipe(
+    return this.http.get<T>(url, options).pipe(
       tap(response => this.logResponse('GET', url, response)),
       catchError(error => this.handleError(error))
     );
@@ -46,7 +43,7 @@ export class ApiService {
       console.log(`[API POST] ${url}`, { useMock: this.useMock, body, options });
     }
 
-    return this.http.post<T>(url, body, options as any).pipe(
+    return this.http.post<T>(url, body, options).pipe(
       tap(response => this.logResponse('POST', url, response)),
       catchError(error => this.handleError(error))
     );
@@ -62,7 +59,7 @@ export class ApiService {
       console.log(`[API PUT] ${url}`, { useMock: this.useMock, body, options });
     }
 
-    return this.http.put<T>(url, body, options as any).pipe(
+    return this.http.put<T>(url, body, options).pipe(
       tap(response => this.logResponse('PUT', url, response)),
       catchError(error => this.handleError(error))
     );
@@ -78,7 +75,7 @@ export class ApiService {
       console.log(`[API PATCH] ${url}`, { useMock: this.useMock, body, options });
     }
 
-    return this.http.patch<T>(url, body, options as any).pipe(
+    return this.http.patch<T>(url, body, options).pipe(
       tap(response => this.logResponse('PATCH', url, response)),
       catchError(error => this.handleError(error))
     );
@@ -94,7 +91,7 @@ export class ApiService {
       console.log(`[API DELETE] ${url}`, { useMock: this.useMock, options });
     }
 
-    return this.http.delete<T>(url, options as any).pipe(
+    return this.http.delete<T>(url, options).pipe(
       tap(response => this.logResponse('DELETE', url, response)),
       catchError(error => this.handleError(error))
     );

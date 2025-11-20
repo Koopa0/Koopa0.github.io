@@ -1,5 +1,44 @@
 [
   {
+    "category": "ai",
+    "series": null,
+    "slug": "ai/getting-started-with-ai",
+    "title": "AI 入門：機器學習基礎概念",
+    "date": "2024-03-15",
+    "description": "介紹機器學習的基礎概念，包括監督式學習、非監督式學習和強化學習",
+    "tags": [
+      "ai"
+    ],
+    "readingTime": 1,
+    "filePath": "ai/getting-started-with-ai"
+  },
+  {
+    "category": "algorithm",
+    "series": null,
+    "slug": "algorithm/lru-cache-implementation",
+    "title": "如何在 Golang 中實現 LRU Cache",
+    "date": "2024-02-01",
+    "description": "從零開始實現一個線程安全的 LRU Cache，並分析時間複雜度",
+    "tags": [
+      "algorithm"
+    ],
+    "readingTime": 3,
+    "filePath": "algorithm/lru-cache-implementation"
+  },
+  {
+    "category": "angular",
+    "series": null,
+    "slug": "angular/angular-signals-guide",
+    "title": "Angular Signals 完整指南",
+    "date": "2024-03-20",
+    "description": "深入探討 Angular 的新響應式原語 Signals，以及如何在應用中使用它",
+    "tags": [
+      "angular"
+    ],
+    "readingTime": 1,
+    "filePath": "angular/angular-signals-guide"
+  },
+  {
     "category": "daily",
     "series": null,
     "slug": "daily/my-coding-setup-2024",
@@ -26,71 +65,6 @@
     "filePath": "devops/docker-best-practices"
   },
   {
-    "category": "google",
-    "series": null,
-    "slug": "google/google-cloud-serverless",
-    "title": "Google Cloud 無伺服器架構實戰",
-    "date": "2024-03-05",
-    "description": "探討如何使用 Cloud Functions 和 Cloud Run 建立可擴展的無伺服器應用",
-    "tags": [
-      "google"
-    ],
-    "readingTime": 1,
-    "filePath": "google/google-cloud-serverless"
-  },
-  {
-    "category": "sql",
-    "series": null,
-    "slug": "sql/sql-performance-tuning",
-    "title": "SQL 查詢效能優化實戰",
-    "date": "2024-03-01",
-    "description": "深入探討 SQL 查詢優化技巧，包括索引設計、執行計畫分析等",
-    "tags": [
-      "sql"
-    ],
-    "readingTime": 1,
-    "filePath": "sql/sql-performance-tuning"
-  },
-  {
-    "category": "system",
-    "series": null,
-    "slug": "system/microservices-architecture",
-    "title": "微服務架構設計原則與實踐",
-    "date": "2024-02-28",
-    "description": "探討微服務架構的設計原則、服務拆分策略和常見挑戰",
-    "tags": [
-      "system"
-    ],
-    "readingTime": 1,
-    "filePath": "system/microservices-architecture"
-  },
-  {
-    "category": "ai",
-    "series": null,
-    "slug": "ai/getting-started-with-ai",
-    "title": "AI 入門：機器學習基礎概念",
-    "date": "2024-03-15",
-    "description": "介紹機器學習的基礎概念，包括監督式學習、非監督式學習和強化學習",
-    "tags": [
-      "ai"
-    ],
-    "readingTime": 1,
-    "filePath": "ai/getting-started-with-ai"
-  },
-  {
-    "category": "angular",
-    "series": null,
-    "slug": "angular/angular-signals-guide",
-    "title": "Angular Signals 完整指南",
-    "date": "2024-03-20",
-    "description": "深入探討 Angular 的新響應式原語 Signals，以及如何在應用中使用它",
-    "tags": [
-      "angular"
-    ],
-    "readingTime": 1,
-    "filePath": "angular/angular-signals-guide"
-  },
-  {
     "category": "flutter",
     "series": null,
     "slug": "flutter/flutter-state-management",
@@ -102,32 +76,6 @@
     ],
     "readingTime": 1,
     "filePath": "flutter/flutter-state-management"
-  },
-  {
-    "category": "rust",
-    "series": null,
-    "slug": "rust/my-rust-learning-journey",
-    "title": "最近學習 Rust 的心得與感想",
-    "date": "2024-03-10",
-    "description": "分享最近從 Golang 轉 Rust 的一些體會和心路歷程",
-    "tags": [
-      "rust"
-    ],
-    "readingTime": 3,
-    "filePath": "rust/my-rust-learning-journey"
-  },
-  {
-    "category": "algorithm",
-    "series": null,
-    "slug": "algorithm/lru-cache-implementation",
-    "title": "如何在 Golang 中實現 LRU Cache",
-    "date": "2024-02-01",
-    "description": "從零開始實現一個線程安全的 LRU Cache，並分析時間複雜度",
-    "tags": [
-      "algorithm"
-    ],
-    "readingTime": 3,
-    "filePath": "algorithm/lru-cache-implementation"
   },
   {
     "category": "golang",
@@ -156,5 +104,57 @@
     ],
     "readingTime": 3,
     "filePath": "golang/golang-advanced-series/02-select"
+  },
+  {
+    "category": "google",
+    "series": null,
+    "slug": "google/google-cloud-serverless",
+    "title": "Google Cloud 無伺服器架構實戰",
+    "date": "2024-03-05",
+    "description": "探討如何使用 Cloud Functions 和 Cloud Run 建立可擴展的無伺服器應用",
+    "tags": [
+      "google"
+    ],
+    "readingTime": 1,
+    "filePath": "google/google-cloud-serverless"
+  },
+  {
+    "category": "rust",
+    "series": null,
+    "slug": "rust/my-rust-learning-journey",
+    "title": "最近學習 Rust 的心得與感想",
+    "date": "2024-03-10",
+    "description": "分享最近從 Golang 轉 Rust 的一些體會和心路歷程",
+    "tags": [
+      "rust"
+    ],
+    "readingTime": 3,
+    "filePath": "rust/my-rust-learning-journey"
+  },
+  {
+    "category": "sql",
+    "series": null,
+    "slug": "sql/sql-performance-tuning",
+    "title": "SQL 查詢效能優化實戰",
+    "date": "2024-03-01",
+    "description": "深入探討 SQL 查詢優化技巧，包括索引設計、執行計畫分析等",
+    "tags": [
+      "sql"
+    ],
+    "readingTime": 1,
+    "filePath": "sql/sql-performance-tuning"
+  },
+  {
+    "category": "system",
+    "series": null,
+    "slug": "system/microservices-architecture",
+    "title": "微服務架構設計原則與實踐",
+    "date": "2024-02-28",
+    "description": "探討微服務架構的設計原則、服務拆分策略和常見挑戰",
+    "tags": [
+      "system"
+    ],
+    "readingTime": 1,
+    "filePath": "system/microservices-architecture"
   }
 ]

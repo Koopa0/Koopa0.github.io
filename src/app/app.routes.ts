@@ -48,12 +48,48 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/register.component').then(m => m.RegisterComponent)
   },
 
-  // Workspace routes (protected, will be added later)
-  // {
-  //   path: 'workspace',
-  //   canActivate: [authGuard],
-  //   children: [...]
-  // },
+  // Workspace routes (protected)
+  {
+    path: 'workspace',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/workspace/workspace-layout.component').then(m => m.WorkspaceLayoutComponent),
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./features/workspace/dashboard/dashboard.component').then(m => m.DashboardComponent)
+      }
+      // TODO: Add these routes when components are created
+      // {
+      //   path: 'pages',
+      //   loadComponent: () => import('./features/workspace/pages/page-list.component').then(m => m.PageListComponent)
+      // },
+      // {
+      //   path: 'pages/:id',
+      //   loadComponent: () => import('./features/workspace/pages/page-editor.component').then(m => m.PageEditorComponent)
+      // },
+      // {
+      //   path: 'ai-chat',
+      //   loadComponent: () => import('./features/workspace/ai-chat/ai-chat.component').then(m => m.AiChatComponent)
+      // },
+      // {
+      //   path: 'learning-paths',
+      //   loadComponent: () => import('./features/workspace/learning-paths/learning-path-list.component').then(m => m.LearningPathListComponent)
+      // },
+      // {
+      //   path: 'learning-paths/:id',
+      //   loadComponent: () => import('./features/workspace/learning-paths/learning-path-detail.component').then(m => m.LearningPathDetailComponent)
+      // },
+      // {
+      //   path: 'settings',
+      //   loadComponent: () => import('./features/workspace/settings/settings.component').then(m => m.SettingsComponent)
+      // }
+    ]
+  },
 
   // 404
   {

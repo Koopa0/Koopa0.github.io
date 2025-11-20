@@ -1,4 +1,5 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, signal, computed, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from './api.service';
@@ -11,6 +12,8 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
   private api = inject(ApiService);
   private router = inject(Router);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   // State
   private currentUserSignal = signal<User | null>(null);
@@ -177,21 +180,25 @@ export class AuthService {
     return !!this.tokenSignal();
   }
 
-  // ========== LocalStorage Operations ==========
+  // ========== LocalStorage Operations (SSR-safe) ==========
 
   private storeToken(token: string): void {
+    if (!this.isBrowser) return;
     localStorage.setItem(environment.storage.tokenKey, token);
   }
 
   private storeUser(user: User): void {
+    if (!this.isBrowser) return;
     localStorage.setItem(environment.storage.userKey, JSON.stringify(user));
   }
 
   private getStoredToken(): string | null {
+    if (!this.isBrowser) return null;
     return localStorage.getItem(environment.storage.tokenKey);
   }
 
   private getStoredUser(): User | null {
+    if (!this.isBrowser) return null;
     const userJson = localStorage.getItem(environment.storage.userKey);
     if (!userJson) return null;
 
@@ -203,6 +210,7 @@ export class AuthService {
   }
 
   private clearStorage(): void {
+    if (!this.isBrowser) return;
     localStorage.removeItem(environment.storage.tokenKey);
     localStorage.removeItem(environment.storage.userKey);
     localStorage.removeItem(environment.storage.refreshTokenKey);
