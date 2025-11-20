@@ -13,6 +13,11 @@ export const serverRoutes: ServerRoute[] = [
     path: 'series/:id',
     renderMode: RenderMode.Server
   },
+  // Workspace routes should not be prerendered (protected routes)
+  {
+    path: 'workspace/**',
+    renderMode: RenderMode.Server
+  },
   {
     path: '**',
     renderMode: RenderMode.Prerender

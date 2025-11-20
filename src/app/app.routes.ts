@@ -62,16 +62,18 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () => import('./features/workspace/dashboard/dashboard.component').then(m => m.DashboardComponent)
+      },
+      {
+        path: 'pages',
+        loadComponent: () => import('./features/workspace/pages/page-list.component').then(m => m.PageListComponent)
+      },
+      {
+        path: 'pages/:id',
+        loadComponent: () => import('./features/workspace/pages/page-editor.component').then(m => m.PageEditorComponent),
+        // Disable prerendering for dynamic routes
+        data: { prerender: false }
       }
       // TODO: Add these routes when components are created
-      // {
-      //   path: 'pages',
-      //   loadComponent: () => import('./features/workspace/pages/page-list.component').then(m => m.PageListComponent)
-      // },
-      // {
-      //   path: 'pages/:id',
-      //   loadComponent: () => import('./features/workspace/pages/page-editor.component').then(m => m.PageEditorComponent)
-      // },
       // {
       //   path: 'ai-chat',
       //   loadComponent: () => import('./features/workspace/ai-chat/ai-chat.component').then(m => m.AiChatComponent)
