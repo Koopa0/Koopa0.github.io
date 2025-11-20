@@ -72,12 +72,12 @@ export const routes: Routes = [
         loadComponent: () => import('./features/workspace/pages/page-editor.component').then(m => m.PageEditorComponent),
         // Disable prerendering for dynamic routes
         data: { prerender: false }
+      },
+      {
+        path: 'ai-chat',
+        loadComponent: () => import('./features/workspace/ai-chat/ai-chat.component').then(m => m.AiChatComponent)
       }
       // TODO: Add these routes when components are created
-      // {
-      //   path: 'ai-chat',
-      //   loadComponent: () => import('./features/workspace/ai-chat/ai-chat.component').then(m => m.AiChatComponent)
-      // },
       // {
       //   path: 'learning-paths',
       //   loadComponent: () => import('./features/workspace/learning-paths/learning-path-list.component').then(m => m.LearningPathListComponent)

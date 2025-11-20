@@ -1,6 +1,7 @@
 // Chat Message
 export interface ChatMessage {
   id: string;
+  conversationId?: string;
   role: 'user' | 'assistant' | 'system';
   content: string;
   citations?: Citation[];
@@ -49,4 +50,24 @@ export interface ChatStreamChunk {
   type: 'chunk' | 'done' | 'error';
   content?: string;
   data?: any;
+}
+
+// Alias for consistency with component usage
+export type ChatConversation = Conversation;
+
+// List Response
+export interface ChatListResponse {
+  conversations: Conversation[];
+  total?: number;
+}
+
+// Send Message Request
+export interface SendMessageRequest {
+  message: string;
+  sourcePageIds?: string[];
+}
+
+// Send Message Response
+export interface SendMessageResponse {
+  message: ChatMessage;
 }

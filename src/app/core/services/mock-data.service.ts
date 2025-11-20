@@ -294,14 +294,22 @@ export class MockDataService {
     body: any,
     params?: HttpParams
   ): any {
+    // Legacy chat endpoint
     if (endpoint === 'ai/chat' && method === 'POST') {
       return this.mockChat(body);
     }
 
+    // Get all conversations
     if (endpoint === 'ai/conversations' && method === 'GET') {
       return { conversations: this.mockData.conversations };
     }
 
+    // Create new conversation
+    if (endpoint === 'ai/conversations' && method === 'POST') {
+      return this.mockCreateConversation(body);
+    }
+
+    // Get single conversation
     const conversationMatch = endpoint.match(/^ai\/conversations\/([^\/]+)$/);
     if (conversationMatch && method === 'GET') {
       const convId = conversationMatch[1];
@@ -310,6 +318,19 @@ export class MockDataService {
         throw { status: 404, message: 'Conversation not found' };
       }
       return conversation;
+    }
+
+    // Delete conversation
+    if (conversationMatch && method === 'DELETE') {
+      const convId = conversationMatch[1];
+      return this.mockDeleteConversation(convId);
+    }
+
+    // Send message to conversation
+    const messageMatch = endpoint.match(/^ai\/conversations\/([^\/]+)\/messages$/);
+    if (messageMatch && method === 'POST') {
+      const convId = messageMatch[1];
+      return this.mockSendMessage(convId, body);
     }
 
     throw { status: 404, message: 'AI endpoint not found' };
@@ -340,6 +361,73 @@ export class MockDataService {
       ],
       tokensUsed: 150
     };
+  }
+
+  private mockCreateConversation(data: any): any {
+    const newConversation: any = {
+      id: 'conv_' + Date.now(),
+      userId: this.currentUser?.id || 'user_1',
+      title: data.title || 'New Chat',
+      messages: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    this.mockData.conversations.push(newConversation);
+    return newConversation;
+  }
+
+  private mockDeleteConversation(convId: string): void {
+    const index = this.mockData.conversations.findIndex((c: any) => c.id === convId);
+    if (index === -1) {
+      throw { status: 404, message: 'Conversation not found' };
+    }
+
+    this.mockData.conversations.splice(index, 1);
+  }
+
+  private mockSendMessage(convId: string, data: any): any {
+    const conversation = this.mockData.conversations.find((c: any) => c.id === convId);
+    if (!conversation) {
+      throw { status: 404, message: 'Conversation not found' };
+    }
+
+    // Generate AI response with citations
+    const aiMessage: any = {
+      id: 'msg_' + Date.now(),
+      conversationId: convId,
+      role: 'assistant',
+      content: `Based on your question "${data.message}", here's what I found in your knowledge base [1][2]:\n\nThis is a mock AI response demonstrating the NotebookLM-style chat interface. When you connect the real Golang backend with Gemini + Genkit, this will provide intelligent answers based on your actual page content using RAG (Retrieval-Augmented Generation).\n\nKey points:\n- The AI can reference specific pages from your knowledge base\n- Citations are numbered and link to source pages\n- Follow-up questions help continue the conversation\n- All responses are context-aware based on your notes`,
+      citations: [
+        {
+          number: 1,
+          pageId: this.mockData.pages[0]?.id || 'page_1',
+          pageTitle: this.mockData.pages[0]?.title || 'Getting Started',
+          excerpt: 'Relevant excerpt from the page that supports the answer...'
+        },
+        {
+          number: 2,
+          pageId: this.mockData.pages[1]?.id || 'page_2',
+          pageTitle: this.mockData.pages[1]?.title || 'Golang Notes',
+          excerpt: 'Another relevant excerpt providing additional context...'
+        }
+      ],
+      followUps: [
+        'Can you explain this in more detail?',
+        'What are some practical examples?',
+        'How does this compare to other approaches?'
+      ],
+      timestamp: new Date().toISOString()
+    };
+
+    // Add message to conversation (cast to any to avoid type issues)
+    if (!conversation.messages) {
+      conversation.messages = [];
+    }
+    conversation.messages.push(aiMessage);
+    conversation.updatedAt = new Date().toISOString();
+
+    return { message: aiMessage };
   }
 
   // ========== Learning Paths Handlers ==========
