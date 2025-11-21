@@ -7,11 +7,7 @@ import {
   TiptapContent,
   PageListResponse,
   Conversation,
-  ChatResponse,
-  LearningPath,
-  NotionConnection,
-  NotionPage,
-  NotionSyncMapping
+  ChatResponse
 } from '../models';
 
 /**
@@ -26,10 +22,7 @@ export class MockDataService {
   private mockData = {
     users: this.generateMockUsers(),
     pages: this.generateMockPages(),
-    conversations: this.generateMockConversations(),
-    learningPaths: this.generateMockLearningPaths(),
-    notionConnections: this.generateMockNotionConnections(),
-    notionSyncMappings: this.generateMockNotionSyncMappings(),
+    conversations: this.generateMockConversations()
   };
 
   // Current authenticated user
@@ -59,16 +52,6 @@ export class MockDataService {
     // AI endpoints
     if (endpoint.startsWith('ai/')) {
       return this.handleAiRequest(method, endpoint, body, params);
-    }
-
-    // Learning Paths endpoints
-    if (endpoint.startsWith('learning-paths')) {
-      return this.handleLearningPathsRequest(method, endpoint, body, params);
-    }
-
-    // Notion endpoints
-    if (endpoint.startsWith('notion/')) {
-      return this.handleNotionRequest(method, endpoint, body, params);
     }
 
     // User endpoints
@@ -430,66 +413,6 @@ export class MockDataService {
     return { message: aiMessage };
   }
 
-  // ========== Learning Paths Handlers ==========
-
-  private handleLearningPathsRequest(
-    method: string,
-    endpoint: string,
-    body: any,
-    params?: HttpParams
-  ): any {
-    if (endpoint === 'learning-paths' && method === 'GET') {
-      return { learningPaths: this.mockData.learningPaths };
-    }
-
-    if (endpoint === 'learning-paths' && method === 'POST') {
-      return this.mockCreateLearningPath(body);
-    }
-
-    throw { status: 404, message: 'Learning Paths endpoint not found' };
-  }
-
-  private mockCreateLearningPath(data: any): LearningPath {
-    const newPath: LearningPath = {
-      id: 'path_' + Date.now(),
-      userId: this.currentUser?.id || 'user_1',
-      title: data.title,
-      description: data.description,
-      icon: data.icon,
-      phases: [],
-      progress: {
-        completedPageIds: [],
-        currentPageId: undefined
-      },
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-
-    this.mockData.learningPaths.push(newPath);
-    return newPath;
-  }
-
-  // ========== Notion Handlers ==========
-
-  private handleNotionRequest(
-    method: string,
-    endpoint: string,
-    body: any,
-    params?: HttpParams
-  ): any {
-    if (endpoint === 'notion/connections' && method === 'GET') {
-      return { connections: this.mockData.notionConnections };
-    }
-
-    if (endpoint === 'notion/auth/url' && method === 'GET') {
-      return {
-        url: 'https://api.notion.com/v1/oauth/authorize?...'
-      };
-    }
-
-    throw { status: 404, message: 'Notion endpoint not found' };
-  }
-
   // ========== Users Handlers ==========
 
   private handleUsersRequest(
@@ -627,45 +550,4 @@ export class MockDataService {
     ];
   }
 
-  private generateMockLearningPaths(): LearningPath[] {
-    return [
-      {
-        id: 'path_1',
-        userId: 'user_1',
-        title: '📚 Golang Learning Path',
-        description: 'From beginner to advanced Golang developer',
-        icon: '🐹',
-        phases: [
-          {
-            id: 'phase_1',
-            title: 'Basics',
-            description: 'Learn the fundamentals',
-            order: 0,
-            pages: [
-              {
-                pageId: 'page_2',
-                title: 'Golang Learning Notes',
-                order: 0,
-                estimatedTime: 30
-              }
-            ]
-          }
-        ],
-        progress: {
-          completedPageIds: [],
-          currentPageId: 'page_2'
-        },
-        createdAt: '2025-01-01T00:00:00Z',
-        updatedAt: '2025-01-01T00:00:00Z'
-      }
-    ];
-  }
-
-  private generateMockNotionConnections(): NotionConnection[] {
-    return [];
-  }
-
-  private generateMockNotionSyncMappings(): NotionSyncMapping[] {
-    return [];
-  }
 }

@@ -81,19 +81,6 @@ export const routes: Routes = [
         path: 'obsidian-import',
         loadComponent: () => import('./features/workspace/obsidian/obsidian-import.component').then(m => m.ObsidianImportComponent)
       }
-      // TODO: Add these routes when components are created
-      // {
-      //   path: 'learning-paths',
-      //   loadComponent: () => import('./features/workspace/learning-paths/learning-path-list.component').then(m => m.LearningPathListComponent)
-      // },
-      // {
-      //   path: 'learning-paths/:id',
-      //   loadComponent: () => import('./features/workspace/learning-paths/learning-path-detail.component').then(m => m.LearningPathDetailComponent)
-      // },
-      // {
-      //   path: 'settings',
-      //   loadComponent: () => import('./features/workspace/settings/settings.component').then(m => m.SettingsComponent)
-      // }
     ]
   },
 
