@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PageService } from '../../../core/services/page.service';
-import { Page, CreatePageRequest, UpdatePageRequest } from '../../../core/models';
+import { Page, CreatePageRequest, UpdatePageRequest, TiptapContent } from '../../../core/models';
+import { TiptapEditorComponent } from '../../../shared/components/tiptap-editor/tiptap-editor.component';
 
 /**
  * Page Editor Component
@@ -17,7 +18,7 @@ import { Page, CreatePageRequest, UpdatePageRequest } from '../../../core/models
 @Component({
   selector: 'app-page-editor',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, TiptapEditorComponent],
   template: `
     <div class="h-full flex flex-col bg-gray-50 dark:bg-gray-950">
       <!-- Top Bar -->
@@ -171,21 +172,15 @@ import { Page, CreatePageRequest, UpdatePageRequest } from '../../../core/models
           </div>
 
           <!-- Content Editor -->
-          <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6">
-            <div class="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-              <p class="text-sm text-blue-800 dark:text-blue-200">
-                <strong>TODO:</strong> Integrate Tiptap editor here for rich text editing with blocks, similar to Notion.
-                <br />
-                For now, using a simple textarea. The backend already supports Tiptap JSON format.
-              </p>
-            </div>
-
-            <textarea
-              [(ngModel)]="contentText"
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Content
+            </label>
+            <app-tiptap-editor
+              [content]="pageContent()"
+              (contentChange)="onContentChange($event)"
               placeholder="Start writing your content..."
-              rows="20"
-              class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
-            ></textarea>
+            ></app-tiptap-editor>
           </div>
         </div>
       </div>
@@ -209,6 +204,7 @@ export class PageEditorComponent implements OnInit {
   saving = signal(false);
   showIconPicker = signal(false);
   moreMenuOpen = signal(false);
+  pageContent = signal<TiptapContent>({ type: 'doc', content: [] });
 
   // Form data
   form = {
@@ -219,7 +215,6 @@ export class PageEditorComponent implements OnInit {
   };
 
   tagsInput = '';
-  contentText = '';
 
   commonEmojis = [
     '📄', '📝', '📋', '📌', '📍', '🚀', '💡', '🎯', '⚡', '🔥',
@@ -251,8 +246,8 @@ export class PageEditorComponent implements OnInit {
       // Tags
       this.tagsInput = page.tags?.join(', ') || '';
 
-      // Content (convert Tiptap JSON to text for now)
-      this.contentText = this.tiptapToText(page.content);
+      // Content
+      this.pageContent.set(page.content);
     } catch (error) {
       console.error('Failed to load page', error);
       alert('Failed to load page. Redirecting to page list.');
@@ -338,6 +333,10 @@ export class PageEditorComponent implements OnInit {
     // Tags are processed when saving
   }
 
+  onContentChange(content: TiptapContent) {
+    this.pageContent.set(content);
+  }
+
   private getPageData(): UpdatePageRequest | CreatePageRequest {
     const tags = this.tagsInput
       .split(',')
@@ -349,45 +348,10 @@ export class PageEditorComponent implements OnInit {
       icon: this.form.icon,
       category: this.form.category || undefined,
       tags: tags.length > 0 ? tags : undefined,
-      content: this.textToTiptap(this.contentText)
+      content: this.pageContent()
       // Note: publishStatus is not included in create/update requests
       // Publishing is handled through the separate publish endpoint
     };
-  }
-
-  /**
-   * Convert plain text to Tiptap JSON format
-   * TODO: This is a temporary solution. Replace with actual Tiptap editor.
-   */
-  private textToTiptap(text: string): any {
-    const paragraphs = text.split('\n').filter(p => p.trim());
-
-    return {
-      type: 'doc',
-      content: paragraphs.map(p => ({
-        type: 'paragraph',
-        content: [{ type: 'text', text: p }]
-      }))
-    };
-  }
-
-  /**
-   * Convert Tiptap JSON to plain text
-   * TODO: This is a temporary solution. Replace with actual Tiptap editor.
-   */
-  private tiptapToText(content: any): string {
-    if (!content || !content.content) return '';
-
-    return content.content
-      .map((node: any) => {
-        if (node.type === 'paragraph' && node.content) {
-          return node.content
-            .map((textNode: any) => textNode.text || '')
-            .join('');
-        }
-        return '';
-      })
-      .join('\n');
   }
 
   private generateSlug(title: string): string {
