@@ -76,6 +76,10 @@ export const routes: Routes = [
       {
         path: 'ai-chat',
         loadComponent: () => import('./features/workspace/ai-chat/ai-chat.component').then(m => m.AiChatComponent)
+      },
+      {
+        path: 'obsidian-import',
+        loadComponent: () => import('./features/workspace/obsidian/obsidian-import.component').then(m => m.ObsidianImportComponent)
       }
       // TODO: Add these routes when components are created
       // {
